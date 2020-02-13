@@ -1,13 +1,30 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang='en'>
   <head>
-    <title>Webpack Starter Kit</title>
+    <meta charset='UTF-8'>
+    <title>Whats Cookin</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap' rel='stylesheet'>
   </head>
   <body>
-    <h1>Webpack Starter Kit</h1>
-
-    <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
-
-    <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
+    <header class='main-header'>
+      <h1>What's Cookin'</h1>
+      <p class='user-info'>Welcome, <span class='user-name'>User</span>.</p>
+      <label for='home-button' class='hidden'>Homepage button</label>
+      <button id='home-button' class='home navButton'>Home</button>
+      <label for='view-favorites-button' class='hidden'>View favorites</label>
+      <button id='view-favorites-button' class=' view-favorites navButton'>View Favorites</button>
+      <!-- <form class='search-bar'>
+        <label for='search-button' class='hidden'>Click here to search here</label>
+        <button id='search-button' class='search-button'>
+          <img class='search-image' src='https://image.flaticon.com/icons/svg/660/660029.svg' alt='Search button'>
+        </button>
+        <label for='search-input' class='hidden'>Type search query here</label>
+        <input id='search-input' class='search-input' type='text' placeholder='Search recipes by name or ingredients' value=''>
+      </form> -->
+    </header>
+    <main>
+      <section class='all-cards'>
+      </section>
+    </main>
   </body>
 </html>
