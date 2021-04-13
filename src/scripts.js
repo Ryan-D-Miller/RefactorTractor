@@ -5,6 +5,14 @@ import recipeData from './data/recipes';
 import ingredientData from './data/ingredients';
 import users from './data/users';
 
+const users = fetch("http://localhost:3001/api/v1/users")
+  .then(response => response.json())
+  .catch(err => alert(err));
+
+const ingredientData = fetch("http://localhost:3001/api/v1/users")
+  .then(response => response.json())
+  .catch(err => alert(err));
+
 import Pantry from './pantry';
 import Recipe from './recipe';
 import User from './user';
