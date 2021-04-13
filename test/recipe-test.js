@@ -28,5 +28,11 @@ describe('Recipe', () => {
     expect(recipe.calculateCost()).to.equal(4166);
   });
 
+  it.only('Should be able to determine the name of ingredients needed', () => {
+    console.log(recipeData[47]);
+    expect(recipe.retrieveIngredients()).to.eql(["cheese", "flatbread", "fresh basil", "grape tomatoes", "olive oil", "zucchini"]);
+  });
+
+  
 
 });

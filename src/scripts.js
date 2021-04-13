@@ -1,6 +1,7 @@
 import './css/base.scss';
 import './css/styles.scss';
 
+import domUpdates from './domUpdates'
 import recipeData from './data/recipes';
 import ingredientData from './data/ingredients';
 import users from './data/users';
@@ -22,6 +23,7 @@ homeButton.addEventListener('click', cardButtonConditionals);
 favButton.addEventListener('click', viewFavorites);
 cardArea.addEventListener('click', cardButtonConditionals);
 
+
 function onStartup() {
   let userId = (Math.floor(Math.random() * 49) + 1)
   let newUser = users.find(user => {
@@ -29,6 +31,7 @@ function onStartup() {
   });
   user = new User(userId, newUser.name, newUser.pantry)
   pantry = new Pantry(newUser.pantry)
+  domUpdates.sayHi();
   populateCards(cookbook.recipes);
   greetUser();
 }
@@ -166,3 +169,5 @@ function populateCards(recipes) {
   })
   getFavorites();
 };
+
+const path = require('path');

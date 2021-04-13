@@ -21,6 +21,16 @@ class Recipe {
     return costCounter;
   }
 
+  retrieveIngredients() {
+      let ingredientsName = this.ingredients.map(ingredient => ingredient.name);
+      console.log(ingredientsName);
+      return ingredientsName;
+  }
+
+
+
+
+
 }
 
 export default Recipe;
