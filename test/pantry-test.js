@@ -147,8 +147,10 @@ describe('Pantry', function() {
         expect(pantry.contents).to.eql([{
             'ingredient': 1009054,
             'amount': 2
-          }])
-    })
+          }]);
+          expect(pantry.cookMeal(recipeDontHave)).to.eql("Dont have ingredients to cook!")
+    });
+
 });
 
 
