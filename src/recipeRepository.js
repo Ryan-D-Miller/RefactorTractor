@@ -6,13 +6,18 @@ class RecipeRepository {
   }
 
   retrieveListByTags(tag) {
-    let listByTags = []
-    let results = this.ingredientsData.find(recipe => recipe.tags.includes(tag));
-    listByTags.push(results);
-      //console.log(this.ingredientsData);
-     console.log(listByTags);
-    return listByTags;
+    let results = this.ingredientsData.filter(recipe => recipe.tags.includes(tag));
+    return results;
   }
+
+  retrieveListByNameOrIngredients(keyword) {
+    let results = this.ingredientsData.filter(recipe => recipe.name.includes(keyword) || recipe.ingredients.includes(keyword));
+
+    return results;
+    };
+
+
+
 
 
 
