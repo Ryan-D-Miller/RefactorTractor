@@ -35,7 +35,7 @@ describe('Recipe', () => {
   });
 
   it('Should be able to return the directions and instructions' , () => {
-    console.log("test", recipeData[47].instructions);
+    //console.log("test", recipeData[47].instructions);
     expect(recipe.retrieveDirections()).to.eql( [
       {
         "number": 1,

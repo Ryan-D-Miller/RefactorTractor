@@ -1,4 +1,4 @@
-import sampleRecipeData from './src/data/sampleRecipesData.js'
+import sampleRecipeData from '../src/data/sampleRecipesData.js'
 
 class RecipeRepository {
   constructor(ingredientsData) {
@@ -6,9 +6,12 @@ class RecipeRepository {
   }
 
   retrieveListByTags(tag) {
-    console.log(this.ingredientsData);
-    let listByTags = this.ingredientsData.filter(recipe => recipe.tags === tag);
-    // return listByTags;
+    let listByTags = []
+    let results = this.ingredientsData.find(recipe => recipe.tags.includes(tag));
+    listByTags.push(results);
+      //console.log(this.ingredientsData);
+     console.log(listByTags);
+    return listByTags;
   }
 
 

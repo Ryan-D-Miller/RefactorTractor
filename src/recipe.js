@@ -29,7 +29,7 @@ class Recipe {
 
   retrieveDirections() {
     let directions = this.instructions;
-    console.log(this.ingredientsData);
+    //console.log(this.ingredientsData);
     return directions;
   }
 
