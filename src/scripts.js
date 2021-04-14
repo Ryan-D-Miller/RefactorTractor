@@ -3,7 +3,7 @@ import './css/styles.scss';
 
 import domUpdates from './domUpdates'
 import recipeData from './data/recipes';
-import ingredientData from './data/ingredients';
+import ingredientsData from './data/ingredients';
 import users from './data/users';
 
 import Pantry from './pantry';
@@ -22,6 +22,10 @@ window.onload = onStartup();
 homeButton.addEventListener('click', cardButtonConditionals);
 favButton.addEventListener('click', viewFavorites);
 cardArea.addEventListener('click', cardButtonConditionals);
+cardArea.addEventListener('click', displayDirections);
+
+
+
 
 
 function onStartup() {

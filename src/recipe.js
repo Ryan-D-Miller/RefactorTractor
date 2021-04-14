@@ -23,9 +23,17 @@ class Recipe {
 
   retrieveIngredients() {
       let ingredientsName = this.ingredients.map(ingredient => ingredient.name);
-      console.log(ingredientsName);
+      //console.log(ingredientsName);
       return ingredientsName;
   }
+
+  retrieveDirections() {
+    let directions = this.instructions;
+    console.log(this.ingredientsData);
+    return directions;
+  }
+
+
 
 
 
