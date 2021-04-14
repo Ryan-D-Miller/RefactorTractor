@@ -1,17 +1,39 @@
 import './css/base.scss';
 import './css/styles.scss';
 
-import recipeData from './data/recipes';
-import ingredientData from './data/ingredients';
-import users from './data/users';
+let userData = {}
+let ingredientsData = {}
+let recipeData = {}
 
-const users = fetch("http://localhost:3001/api/v1/users")
-  .then(response => response.json())
-  .catch(err => alert(err));
+function getData() {
+  userData = fetch("http://localhost:3001/api/v1/users")
+    .then(response => response.json())
+    .then(userData => {
+      return userData;
+    })
+    .catch(err => console.log("Error: Users data can't be accessed."));
 
-const ingredientData = fetch("http://localhost:3001/api/v1/users")
-  .then(response => response.json())
-  .catch(err => alert(err));
+  ingredientsData = fetch("http://localhost:3001/api/v1/ingredients")
+    .then(response => response.json())
+    .then(ingredientsData => {
+      return ingredientsData;
+    })
+    .catch(err => console.log("Error: Ingredient data can't be accessed."));
+
+  recipeData = fetch("http://localhost:3001/api/v1/recipes")
+    .then(response => response.json())
+    .then(recipeData => {
+      return recipeData;
+    })
+    .catch(err => console.log("Error: Recipe data can't be accessed."));
+
+  return Promise.all([userData, ingredientsData, recipeData])
+    .then(data => {
+      userData = data[0];
+      ingredientsData = data[1];
+      recipeData = data[2];
+    })
+}
 
 import Pantry from './pantry';
 import Recipe from './recipe';
@@ -19,10 +41,9 @@ import User from './user';
 import Cookbook from './cookbook';
 
 let favButton = document.querySelector('.view-favorites');
-let homeButton = document.querySelector('.home')
+let homeButton = document.querySelector('.home');
 let cardArea = document.querySelector('.all-cards');
-let cookbook = new Cookbook(recipeData);
-let user, pantry;
+let user, pantry, cookbook;
 
 window.onload = onStartup();
 
@@ -31,14 +52,18 @@ favButton.addEventListener('click', viewFavorites);
 cardArea.addEventListener('click', cardButtonConditionals);
 
 function onStartup() {
-  let userId = (Math.floor(Math.random() * 49) + 1)
-  let newUser = users.find(user => {
+  getData()
+  .then(data => {
+  let userId = (Math.floor(Math.random() * userData.length));
+  let newUser = userData.find(user => {
     return user.id === Number(userId);
   });
+  cookbook = new Cookbook(recipeData);
   user = new User(userId, newUser.name, newUser.pantry)
-  pantry = new Pantry(newUser.pantry)
+  pantry = new Pantry(newUser.pantry);
   populateCards(cookbook.recipes);
   greetUser();
+  })
 }
 
 function viewFavorites() {
@@ -105,7 +130,6 @@ function cardButtonConditionals(event) {
     populateCards(cookbook.recipes);
   }
 }
-
 
 function displayDirections(event) {
   let newRecipeInfo = cookbook.recipes.find(recipe => {
