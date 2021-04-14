@@ -50,6 +50,11 @@ window.onload = onStartup();
 homeButton.addEventListener('click', cardButtonConditionals);
 favButton.addEventListener('click', viewFavorites);
 cardArea.addEventListener('click', cardButtonConditionals);
+cardArea.addEventListener('click', displayDirections);
+
+
+
+
 
 function onStartup() {
   getData()
@@ -60,7 +65,9 @@ function onStartup() {
   });
   cookbook = new Cookbook(recipeData);
   user = new User(userId, newUser.name, newUser.pantry)
+
   pantry = new Pantry(newUser.pantry);
+
   populateCards(cookbook.recipes);
   greetUser();
   })
@@ -198,3 +205,5 @@ function populateCards(recipes) {
   })
   getFavorites();
 };
+
+const path = require('path');

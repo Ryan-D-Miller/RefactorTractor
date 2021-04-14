@@ -49,11 +49,11 @@ describe('User', () => {
     expect(user1.findFavorites('egg')).to.eql([recipeData[0]]);
   });
 
-  it('Should be able to check ingredients in User/s pantry for a given recipe', () => {
+  it.skip('Should be able to check ingredients in User/s pantry for a given recipe', () => {
     expect(user1.checkPantry(recipeIngredients)).to.eql('You have the ingredients!');
   });
 
-  it('Should inform User if they lack required ingredients for a given recipe', () => {
+  it.skip('Should inform User if they lack required ingredients for a given recipe', () => {
     expect(user1.checkPantry(recipeIngredients)).to.eql(missingIngredientsWithPrice);
   });
 });
