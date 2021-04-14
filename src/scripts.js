@@ -36,7 +36,7 @@ function getData() {
     })
 }
 
-
+import domUpdates from './domUpdates';
 import Pantry from './pantry';
 import Recipe from './recipe';
 import User from './user';
@@ -54,30 +54,29 @@ favButton.addEventListener('click', function() {
   domUpdates.viewFavorites(user, cookbook);
 });
 cardArea.addEventListener('click', cardButtonConditionals);
-cardArea.addEventListener('click', displayDirections);
-
-
-
-
 
 function onStartup() {
   getData()
   .then(data => {
-  let userId = (Math.floor(Math.random() * userData.length));
-  let newUser = userData.find(user => {
-    return user.id === Number(userId);
-  });
-  cookbook = new Cookbook(recipeData);
+    let userId = (Math.floor(Math.random() * userData.length));
+    let newUser = userData.find(user => {
+      return user.id === Number(userId);
+    });
+ 
+      cookbook = new Cookbook(recipeData);
   user = new User(userId, newUser.name, newUser.pantry)
   pantry = new Pantry(newUser.pantry)
   domUpdates.populateCards(cookbook.recipes, user);
   domUpdates.greetUser(user);
+  });
 }
+
 
 function cardButtonConditionals(event) {
   if (event.target.classList.contains('favorite')) {
     domUpdates.favoriteCard(event, cookbook, user);
   } else if (event.target.classList.contains('card-picture')) {
+    console.log("im here");
     displayDirections(event);
   } else if (event.target.classList.contains('home')) {
     favButton.innerHTML = 'View Favorites';
@@ -117,14 +116,4 @@ function displayDirections(event) {
     `)
   })
 }
-
-// function getFavorites() {
-//   if (user.favoriteRecipes.length) {
-//     user.favoriteRecipes.forEach(recipe => {
-//       document.querySelector(`.favorite${recipe.id}`).classList.add('favorite-active')
-//     })
-//   } else return
-// }
-
-const path = require('path');
 
