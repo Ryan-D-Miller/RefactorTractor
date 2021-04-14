@@ -150,13 +150,15 @@ img {
 .all-recipe-info,
 ol {
   color: #EBF5EE;
-  /* font-size: 16px; */
+  font-size: 14px;
   width: 100%;
 }
 
 h3 {
   color: #EBF5EE;
+  font-size: 14px;
   /* font-size: 14px; */
+
 }
 
 .recipe-name {
