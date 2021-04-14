@@ -93,6 +93,3 @@ let domUpdates = {
 export default domUpdates;
 
 
-
-export default domUpdates;
-
