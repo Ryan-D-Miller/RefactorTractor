@@ -1,3 +1,4 @@
+
 let favButton = document.querySelector('.view-favorites');
 let homeButton = document.querySelector('.home')
 let cardArea = document.querySelector('.all-cards');
@@ -90,3 +91,8 @@ let domUpdates = {
 };
 
 export default domUpdates;
+
+
+
+export default domUpdates;
+
