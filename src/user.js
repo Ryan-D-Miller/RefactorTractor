@@ -34,9 +34,10 @@ class User {
   }
 
   addRecipe(recipe) {
-    this.recipesToCook.push(recipe);
-  }
+    if (!this.recipesToCook.includes(recipe)) {
+      this.recipesToCook.push(recipe)
+    }
+  };
 }
-
 
 export default User;

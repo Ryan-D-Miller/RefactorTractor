@@ -66,7 +66,6 @@ function onStartup() {
     });
 }
 
-
 function cardButtonConditionals(event) {
   if (event.target.classList.contains('favorite')) {
     domUpdates.favoriteCard(event, cookbook, user);
@@ -112,4 +111,3 @@ function displayDirections(event) {
     `)
   })
 }
-
