@@ -4,6 +4,7 @@ class User {
     this.name = userData.name;
     this.pantry = userData.pantry;
     this.favoriteRecipes = [];
+    this.recipesToCook = [];
   }
 
   addToFavorites(recipe) {
@@ -30,6 +31,10 @@ class User {
         return ingredient.name.includes(strgToSrch)
       });
     });
+  }
+
+  addRecipe(recipe) {
+    this.recipesToCook.push(recipe);
   }
 }
 
