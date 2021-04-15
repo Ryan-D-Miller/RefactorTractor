@@ -57,18 +57,13 @@ cardArea.addEventListener('click', cardButtonConditionals);
 
 function onStartup() {
   getData()
-  .then(data => {
-    let userId = (Math.floor(Math.random() * userData.length));
-    let newUser = userData.find(user => {
-      return user.id === Number(userId);
-    });
- 
+    .then(data => {
+      user = new User(userData[(Math.floor(Math.random() * userData.length))]);
       cookbook = new Cookbook(recipeData);
-  user = new User(userId, newUser.name, newUser.pantry)
-  pantry = new Pantry(newUser.pantry)
-  domUpdates.populateCards(cookbook.recipes, user);
-  domUpdates.greetUser(user);
-  });
+      pantry = new Pantry(user.pantry)
+      domUpdates.populateCards(cookbook.recipes, user);
+      domUpdates.greetUser(user);
+    });
 }
 
 
