@@ -71,11 +71,12 @@ function cardButtonConditionals(event) {
   if (event.target.classList.contains('favorite')) {
     domUpdates.favoriteCard(event, cookbook, user);
   } else if (event.target.classList.contains('card-picture')) {
-    console.log("im here");
     displayDirections(event);
   } else if (event.target.classList.contains('home')) {
     favButton.innerHTML = 'View Favorites';
     domUpdates.populateCards(cookbook.recipes, user);
+  } else if (event.target.classList.contains('add-button')) {
+    user.addRecipe()
   }
 }
 
