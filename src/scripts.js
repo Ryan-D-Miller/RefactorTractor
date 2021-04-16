@@ -1,39 +1,22 @@
 import './css/base.scss';
 import './css/styles.scss';
 
+let globalIngredientsData = {}
 
-let userData = {}
-let ingredientsData = {}
-let recipeData = {}
+const getUserData = () => fetch("http://localhost:3001/api/v1/users")
+  .then(response => response.json())
+  .catch(err => console.log(`User API Error: ${err.message}`));
+
+const getIngredientsData = () => fetch("http://localhost:3001/api/v1/ingredients")
+  .then(response => response.json())
+  .catch(err => console.log(`Ingredients API Error: ${err.message}`));
+
+const getRecipeData = () => fetch("http://localhost:3001/api/v1/recipes")
+  .then(response => response.json())
+  .catch(err => console.log(`Recipe API Error: ${err.message}`));
 
 function getData() {
-  userData = fetch("http://localhost:3001/api/v1/users")
-    .then(response => response.json())
-    .then(userData => {
-      return userData;
-    })
-    .catch(err => console.log("Error: Users data can't be accessed."));
-
-  ingredientsData = fetch("http://localhost:3001/api/v1/ingredients")
-    .then(response => response.json())
-    .then(ingredientsData => {
-      return ingredientsData;
-    })
-    .catch(err => console.log("Error: Ingredient data can't be accessed."));
-
-  recipeData = fetch("http://localhost:3001/api/v1/recipes")
-    .then(response => response.json())
-    .then(recipeData => {
-      return recipeData;
-    })
-    .catch(err => console.log("Error: Recipe data can't be accessed."));
-
-  return Promise.all([userData, ingredientsData, recipeData])
-    .then(data => {
-      userData = data[0];
-      ingredientsData = data[1];
-      recipeData = data[2];
-    })
+  return Promise.all([getUserData(), getIngredientsData(), getRecipeData()])
 }
 
 import domUpdates from './domUpdates';
@@ -57,8 +40,9 @@ cardArea.addEventListener('click', cardButtonConditionals);
 
 function onStartup() {
   getData()
-    .then(data => {
+    .then(([userData, ingredientsData, recipeData]) => {
       user = new User(userData[(Math.floor(Math.random() * userData.length))]);
+      globalIngredientsData = ingredientsData;
       cookbook = new Cookbook(recipeData);
       pantry = new Pantry(user.pantry)
       domUpdates.populateCards(cookbook.recipes, user);
@@ -85,7 +69,7 @@ function displayDirections(event) {
       return recipe;
     }
   })
-  let recipeObject = new Recipe(newRecipeInfo, ingredientsData);
+  let recipeObject = new Recipe(newRecipeInfo, globalIngredientsData);
   let cost = recipeObject.calculateCost()
   let costInDollars = (cost / 100).toFixed(2)
   cardArea.classList.add('all');
