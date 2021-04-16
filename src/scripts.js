@@ -1,5 +1,6 @@
-import './css/base.scss';
-import './css/styles.scss';
+// import './css/base.scss';
+// import './css/styles.scss';
+import './css/index.scss';
 
 
 let userData = {}
@@ -116,4 +117,13 @@ function displayDirections(event) {
     `)
   })
 }
+
+keyword = keyword.isLowerCase();
+let results = this.ingredientdata.filter(recipe=> {
+  lowerCaseName = recipe.isLowerCase();
+  lowerCaseIngredients = recipe.ingredient.map(ingredient => ingedient.isLowerCase());
+  if(lowerCaseName.includes(keyword) || lowerCaseIngredients.includes(keyword))
+    return true
+  // return  || recipe.ingredients.inculdes(keyword)
+});
 
