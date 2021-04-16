@@ -20,29 +20,23 @@ const getRecipeData = () => fetch("http://localhost:3001/api/v1/recipes")
   .then(response => response.json())
   .catch(err => console.log(`Recipe API Error: ${err.message}`));
 
-const postIngredients = () => fetch("http://localhost:3001/api/v1/users", {
+const postIngredients = (userID, ingredientID, ingredientMod) => fetch("http://localhost:3001/api/v1/users", {
   method: 'POST',
-  body: JSON.stringify(someDataToSend), // remember how HTTP can only send and receive strings, just like localStorage?
+  body: JSON.stringify({
+    userID: userID,
+    ingredientID: ingredientID,
+    ingredientModification: ingredientMod,
+  }), 
   headers: {
-  	'Content-Type': 'application/json'
+    'Content-Type': 'application/json'
   }
 })
   .then(response => response.json())
-  .then(json => /*do something with json*/)
-  .catch(err => /*do something with the error*/);
-  
-  {
-  "userID": 50,
-  "ingredientID": 123,
-  "ingredientModification": 3
-  }
-
+  .catch(err => console.log(`POST Request Error: ${err.message}`))
 
 function getData() {
   return Promise.all([getUserData(), getIngredientsData(), getRecipeData()])
 }
-
-
 
 let favButton = document.querySelector('.view-favorites');
 let homeButton = document.querySelector('.home');
