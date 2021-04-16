@@ -1,5 +1,10 @@
 import './css/base.scss';
 import './css/styles.scss';
+import domUpdates from './domUpdates';
+import Pantry from './pantry';
+import Recipe from './recipe';
+import User from './user';
+import Cookbook from './cookbook';
 
 let globalIngredientsData = {}
 
@@ -15,20 +20,34 @@ const getRecipeData = () => fetch("http://localhost:3001/api/v1/recipes")
   .then(response => response.json())
   .catch(err => console.log(`Recipe API Error: ${err.message}`));
 
+const postIngredients = () => fetch("http://localhost:3001/api/v1/users", {
+  method: 'POST',
+  body: JSON.stringify(someDataToSend), // remember how HTTP can only send and receive strings, just like localStorage?
+  headers: {
+  	'Content-Type': 'application/json'
+  }
+})
+  .then(response => response.json())
+  .then(json => /*do something with json*/)
+  .catch(err => /*do something with the error*/);
+  
+  {
+  "userID": 50,
+  "ingredientID": 123,
+  "ingredientModification": 3
+  }
+
+
 function getData() {
   return Promise.all([getUserData(), getIngredientsData(), getRecipeData()])
 }
 
-import domUpdates from './domUpdates';
-import Pantry from './pantry';
-import Recipe from './recipe';
-import User from './user';
-import Cookbook from './cookbook';
+
 
 let favButton = document.querySelector('.view-favorites');
 let homeButton = document.querySelector('.home');
 let cardArea = document.querySelector('.all-cards');
-let user, pantry, cookbook;
+let user, cookbook;
 
 window.onload = onStartup();
 
@@ -44,7 +63,7 @@ function onStartup() {
       user = new User(userData[(Math.floor(Math.random() * userData.length))]);
       globalIngredientsData = ingredientsData;
       cookbook = new Cookbook(recipeData);
-      pantry = new Pantry(user.pantry)
+      let pantry = new Pantry(user.pantry);
       domUpdates.populateCards(cookbook.recipes, user);
       domUpdates.greetUser(user);
     });
