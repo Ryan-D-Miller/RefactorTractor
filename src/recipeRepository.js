@@ -23,7 +23,6 @@ class RecipeRepository {
         addToSearch = true;
       let ingredients = this.convertToName(recipe, ingredientData);
       ingredients.forEach(ingredient => {
-        console.log(ingredient);
         if(ingredient.name.includes(keyword))
         {
           addToSearch = true;

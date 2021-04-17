@@ -105,6 +105,8 @@ function displayDirections(event) {
     }
   })
   let recipeObject = new Recipe(newRecipeInfo, globalIngredientsData);
+  const ingrdientWithName = convertToName(recipeObject);
+  recipeObject.ingredients = ingrdientWithName;
   let cost = recipeObject.calculateCost()
   let costInDollars = (cost / 100).toFixed(2)
   cardArea.classList.add('all');
