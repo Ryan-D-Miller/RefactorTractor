@@ -1,7 +1,8 @@
+img {
+  cursor: pointer;
+}
+
 .card-button {
-  
-  border: 2px solid $black;
-  border-radius: .5rem;
   height: 2rem;
   width: 2rem;
   margin: .4rem;
@@ -10,7 +11,9 @@
 }
 
 .add-button {
+  border: 2px solid $black;
   background-color: #308EA1;
+  border-radius: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,10 +21,6 @@
 
 .add {
   width: 100%;
-}
-
-.hidden {
-  display: none;
 }
 
 .favorite {
@@ -40,15 +39,14 @@
   width: 95.5vw;
 }
 
-img {
-  cursor: pointer;
-}
 
 .card {
   background-color: #D7F2FE;
-  // border: 2px solid $black;
+  border: 3px solid $black;
   border-radius: 1rem;
   box-shadow: 0px 0px 8px $black;
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -59,6 +57,7 @@ img {
   border-bottom: 1px solid $black;
   display: flex;
   justify-content: space-between;
+  // height: 15%;
 }
 
 .all {
@@ -79,14 +78,14 @@ h3 {
 }
 
 .recipe-name {
-  height: 3rem;
+  height: 2.5rem;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  justify-content: center;
+  overflow-wrap: break-word;
   text-align: center;
-  font-size: 1.3rem;
-  margin: 0rem 1rem 2rem 1rem;
+  font-size: 1.2rem;
+  padding-bottom: 1rem;
   text-shadow: 2px 2px 5px #308EA1;
 }
 
@@ -124,6 +123,11 @@ h3 {
     grid-gap: .4rem;
     grid-template-columns: repeat(3, 1fr);
   }
+  
+  .recipe-name {
+    height: 2rem;
+    font-size: 1rem;
+  }
 }
 
   @media screen and (max-width: 550px) {
@@ -132,4 +136,14 @@ h3 {
       grid-gap: .4rem;
       grid-template-columns: repeat(2, 1fr);
   }
+
+  .recipe-name {
+    height: 1rem;
+    margin-top: .5rem;
+    font-size: .8rem;
+  }
+}
+
+.hidden {
+  display: none;
 }
