@@ -7,6 +7,12 @@ import Cookbook from './cookbook';
 import './css/index.scss';
 
 
+let userData = {}
+let ingredientsData = {}
+let recipeData = {}
+let recipeRepository;
+
+
 let globalIngredientsData = {}
 
 const getUserData = () => fetch("http://localhost:3001/api/v1/users")
@@ -20,6 +26,14 @@ const getIngredientsData = () => fetch("http://localhost:3001/api/v1/ingredients
 const getRecipeData = () => fetch("http://localhost:3001/api/v1/recipes")
   .then(response => response.json())
   .catch(err => console.log(`Recipe API Error: ${err.message}`));
+
+
+import domUpdates from './domUpdates';
+import Pantry from './pantry';
+import Recipe from './recipe';
+import User from './user';
+import Cookbook from './cookbook';
+import RecipeRepository from './recipeRepository'
 
 const postIngredients = (userID, ingredientID, ingredientMod) => fetch("http://localhost:3001/api/v1/users", {
   method: 'POST',
@@ -39,10 +53,13 @@ function getData() {
   return Promise.all([getUserData(), getIngredientsData(), getRecipeData()])
 }
 
+
 let favButton = document.querySelector('.view-favorites');
 let homeButton = document.querySelector('.home');
 let cardArea = document.querySelector('.all-cards');
 let user, cookbook;
+
+let searchInput = document.querySelector('#searchInput');
 
 window.onload = onStartup();
 
@@ -52,6 +69,9 @@ favButton.addEventListener('click', function() {
 });
 cardArea.addEventListener('click', cardButtonConditionals);
 
+searchInput.addEventListener('keydown', function() {
+  domUpdates.searchBarSearch(recipeRepository, ingredientsData);
+});
 function onStartup() {
   getData()
     .then(([userData, ingredientsData, recipeData]) => {
@@ -59,6 +79,7 @@ function onStartup() {
       globalIngredientsData = ingredientsData;
       cookbook = new Cookbook(recipeData);
       let pantry = new Pantry(user.pantry);
+      recipeRepository = new RecipeRepository (recipeData);
       domUpdates.populateCards(cookbook.recipes, user);
       domUpdates.greetUser(user);
     });
@@ -108,4 +129,6 @@ function displayDirections(event) {
     ${instruction.instruction}</li>
     `)
   })
+
 }
+
