@@ -1,10 +1,10 @@
 class User {
-  constructor(id, name, pantry) {
-    this.id = id;
-    this.name = name;
-    this.pantry = pantry;
+  constructor(userData) {
+    this.id = userData.id;
+    this.name = userData.name;
+    this.pantry = userData.pantry;
     this.favoriteRecipes = [];
-
+    this.recipesToCook = [];
   }
 
   addToFavorites(recipe) {
@@ -32,7 +32,12 @@ class User {
       });
     });
   }
-}
 
+  addRecipe(recipe) {
+    if (!this.recipesToCook.includes(recipe)) {
+      this.recipesToCook.push(recipe)
+    }
+  };
+}
 
 export default User;

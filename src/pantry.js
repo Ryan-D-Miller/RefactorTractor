@@ -8,16 +8,16 @@ class Pantry {
     let missingIngredients = [];
     recipe.ingredients.forEach(ingredient => {
       let ingredientIndex = this.contents.findIndex(element => element.ingredient === ingredient.id);
-      if(ingredientIndex === -1 || this.contents[ingredientIndex].amount < ingredient.quantity.amount) {
+      if (ingredientIndex === -1 || this.contents[ingredientIndex].amount < ingredient.quantity.amount) {
         haveIngredient = false;
         let amountDifference = ingredient.quantity.amount;
-        if(ingredientIndex !== -1) {
+        if (ingredientIndex !== -1) {
           amountDifference = ingredient.quantity.amount - this.contents[ingredientIndex].amount;
         }
         missingIngredients.push({'name': ingredient.name, 'amount': amountDifference});
       }
     });
-    if(haveIngredient){
+    if (haveIngredient) {
       return haveIngredient;
     }
     return missingIngredients;
@@ -34,7 +34,7 @@ class Pantry {
         }
       });
     } else {
-      return "Dont have ingredients to cook!";
+      return "Don't have ingredients to cook!";
     } 
       
   }

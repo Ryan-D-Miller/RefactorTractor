@@ -1,5 +1,10 @@
-import './css/base.scss';
-import './css/styles.scss';
+import domUpdates from './domUpdates';
+import Pantry from './pantry';
+import Recipe from './recipe';
+import User from './user';
+import Cookbook from './cookbook';
+
+import './css/index.scss';
 
 
 let userData = {}
@@ -7,35 +12,21 @@ let ingredientsData = {}
 let recipeData = {}
 let recipeRepository;
 
-function getData() {
-  userData = fetch("http://localhost:3001/api/v1/users")
-    .then(response => response.json())
-    .then(userData => {
-      return userData;
-    })
-    .catch(err => console.log("Error: Users data can't be accessed."));
 
-  ingredientsData = fetch("http://localhost:3001/api/v1/ingredients")
-    .then(response => response.json())
-    .then(ingredientsData => {
-      return ingredientsData;
-    })
-    .catch(err => console.log("Error: Ingredient data can't be accessed."));
+let globalIngredientsData = {}
 
-  recipeData = fetch("http://localhost:3001/api/v1/recipes")
-    .then(response => response.json())
-    .then(recipeData => {
-      return recipeData;
-    })
-    .catch(err => console.log("Error: Recipe data can't be accessed."));
+const getUserData = () => fetch("http://localhost:3001/api/v1/users")
+  .then(response => response.json())
+  .catch(err => console.log(`User API Error: ${err.message}`));
 
-  return Promise.all([userData, ingredientsData, recipeData])
-    .then(data => {
-      userData = data[0];
-      ingredientsData = data[1];
-      recipeData = data[2];
-    })
-}
+const getIngredientsData = () => fetch("http://localhost:3001/api/v1/ingredients")
+  .then(response => response.json())
+  .catch(err => console.log(`Ingredients API Error: ${err.message}`));
+
+const getRecipeData = () => fetch("http://localhost:3001/api/v1/recipes")
+  .then(response => response.json())
+  .catch(err => console.log(`Recipe API Error: ${err.message}`));
+
 
 import domUpdates from './domUpdates';
 import Pantry from './pantry';
@@ -44,10 +35,29 @@ import User from './user';
 import Cookbook from './cookbook';
 import RecipeRepository from './recipeRepository'
 
+const postIngredients = (userID, ingredientID, ingredientMod) => fetch("http://localhost:3001/api/v1/users", {
+  method: 'POST',
+  body: JSON.stringify({
+    userID: userID,
+    ingredientID: ingredientID,
+    ingredientModification: ingredientMod,
+  }), 
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+  .then(response => response.json())
+  .catch(err => console.log(`POST Request Error: ${err.message}`))
+
+function getData() {
+  return Promise.all([getUserData(), getIngredientsData(), getRecipeData()])
+}
+
+
 let favButton = document.querySelector('.view-favorites');
 let homeButton = document.querySelector('.home');
 let cardArea = document.querySelector('.all-cards');
-let user, pantry, cookbook;
+let user, cookbook;
 
 let searchInput = document.querySelector('#searchInput');
 
@@ -64,35 +74,27 @@ searchInput.addEventListener('keydown', function() {
 });
 function onStartup() {
   getData()
-  .then(data => {
-    let userId = (Math.floor(Math.random() * userData.length));
-    let newUser = userData.find(user => {
-      return user.id === Number(userId);
-    });
-
+    .then(([userData, ingredientsData, recipeData]) => {
+      user = new User(userData[(Math.floor(Math.random() * userData.length))]);
+      globalIngredientsData = ingredientsData;
       cookbook = new Cookbook(recipeData);
-  user = new User(userId, newUser.name, newUser.pantry)
-  pantry = new Pantry(newUser.pantry)
-  recipeRepository = new RecipeRepository (recipeData);
-  domUpdates.populateCards(cookbook.recipes, user);
-  domUpdates.greetUser(user);
-  });
+      let pantry = new Pantry(user.pantry);
+      recipeRepository = new RecipeRepository (recipeData);
+      domUpdates.populateCards(cookbook.recipes, user);
+      domUpdates.greetUser(user);
+    });
 }
-
-// function searchBarSearch() {
-//   let search =
-
-// }
 
 function cardButtonConditionals(event) {
   if (event.target.classList.contains('favorite')) {
     domUpdates.favoriteCard(event, cookbook, user);
   } else if (event.target.classList.contains('card-picture')) {
-    console.log("im here");
     displayDirections(event);
   } else if (event.target.classList.contains('home')) {
     favButton.innerHTML = 'View Favorites';
     domUpdates.populateCards(cookbook.recipes, user);
+  } else if (event.target.classList.contains('add-button')) {
+    user.addRecipe()
   }
 }
 
@@ -102,7 +104,7 @@ function displayDirections(event) {
       return recipe;
     }
   })
-  let recipeObject = new Recipe(newRecipeInfo, ingredientsData);
+  let recipeObject = new Recipe(newRecipeInfo, globalIngredientsData);
   let cost = recipeObject.calculateCost()
   let costInDollars = (cost / 100).toFixed(2)
   cardArea.classList.add('all');
@@ -127,4 +129,6 @@ function displayDirections(event) {
     ${instruction.instruction}</li>
     `)
   })
+
 }
+
