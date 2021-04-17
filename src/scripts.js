@@ -67,7 +67,7 @@ pantryButton.addEventListener('click', function() {
   domUpdates.displayPantry(user, pantry, globalIngredientsData);
 });
 
-searchInput.addEventListener('keydown', function() {
+searchInput.addEventListener('keyup', function() {
   domUpdates.searchBarSearch(recipeRepository, globalIngredientsData);
 });
 function onStartup() {
