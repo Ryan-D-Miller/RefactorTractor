@@ -1,110 +1,112 @@
-
 .card-button {
-    border: 1px solid $black;
-    height: 27px;
-    margin: 3px;
+  border: 1px solid $black;
+  height: 27px;
+  margin: 3px;
+}
+
+.add-button {
+  background-color: $nav-color;
+  display: flex;
+  width: 12%;
+}
+
+.add {
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+
+.favorite {
+  background-color: $nav-color;
+  background-image: url(https://image.flaticon.com/icons/svg/149/149222.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 13%;
+}
+
+.all-cards {
+  display: grid;
+  grid-gap: .4rem;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 1rem;
+  width: 95.5vw;
+}
+
+img {
+  cursor: pointer;
+}
+
+.card {
+  background-color: #D7F2FE;
+  border: 3px solid $black;
+  width: 100%;
+}
+
+
+.card-header {
+  background-color: $nav-color;
+  border-bottom: 1px solid $black;
+  display: flex;
+  justify-content: space-between;
+}
+
+.all {
+  grid-gap: 0px;
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.all-recipe-info,
+ol {
+  color: $nav-color;
+  font-size: 14px;
+  width: 100%;
+}
+
+h3 {
+  color: $nav-color;
+  font-size: 20px;
+}
+
+.recipe-name {
+  color: $black;
+  display: block;
+  font-size: 22px;
+  text-align: center;
+}
+
+
+.picture-container {
+  display: flex;
+  align-self: flex-end;
+  justify-content: flex-end;
+}
+
+.card-picture {
+  border: 1px solid $black;
+  margin: 10px 3% 8px 2.6%;
+  width: 94%;
+
+  align-self: flex-end;
+
+  &:hover {
+    opacity: 0.7;
   }
 
-
-
-  .add-button {
-    background-color: $nav-color;
-    display: flex;
-    width: 12%;
+  &:active {
+    border: 2px solid $black;
   }
+}
 
-  .add {
-    width: 100%;
-  }
+.favorite-active {
+  background-image: url(https://image.flaticon.com/icons/svg/148/148841.svg);
+  background-repeat: no-repeat;
+}
 
-  .hidden {
-    display: none;
-  }
-
-
-  .favorite {
-    background-color: $nav-color;
-    background-image: url(https://image.flaticon.com/icons/svg/149/149222.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 13%;
-  }
-
+@media only screen and (max-width:550px) {
   .all-cards {
-    display: grid;
-    grid-gap: 30px;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 30px 0 30px 30px;
-    width: 95.5vw;
+    grid-template-columns: 2fr;
   }
-
-  img {
-    cursor: pointer;
-  }
-
-  .card {
-    background-color: #D7F2FE;
-    border: 3px solid $black;
-    width: 100%;
-  }
-
-
-  .card-header {
-    background-color: $nav-color;
-    border-bottom: 1px solid $black;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .all {
-    grid-gap: 0px;
-    grid-template-columns: repeat(1, 1fr);
-  }
-
-  .all-recipe-info,
-  ol {
-    color: $nav-color;
-    font-size: 14px;
-    width: 100%;
-  }
-
-  h3 {
-    color: $nav-color;
-    font-size: 20px;
-  }
-
-  .recipe-name {
-    color: $black;
-    display: block;
-    font-size: 22px;
-    text-align: center;
-  }
-
-
-  .picture-container {
-    display: flex;
-    align-self: flex-end;
-    justify-content: flex-end;
-  }
-
-  .card-picture {
-    border: 1px solid $black;
-    margin: 10px 3% 8px 2.6%;
-    width: 94%;
-  
-    align-self: flex-end;
-
-    &:hover {
-      opacity: 0.7;
-    }
-
-    &:active {
-      border: 2px solid $black;
-    }
-  }
-  
-  .favorite-active {
-    background-image: url(https://image.flaticon.com/icons/svg/148/148841.svg);
-    background-repeat: no-repeat;
-  }
-
+}

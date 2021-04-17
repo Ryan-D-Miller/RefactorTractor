@@ -37,11 +37,11 @@ class User {
     if (!this.recipesToCook.includes(recipe)) {
       this.recipesToCook.push(recipe)
     }
-  };
+  }
 
   removeRecipe(recipe) {
     const index = this.recipesToCook.findIndex(recipeIndex => recipe.id === recipeIndex.id)
-    if(index !== -1) {
+    if (index !== -1) {
       this.recipesToCook.splice(index, 1);
     }
   }
