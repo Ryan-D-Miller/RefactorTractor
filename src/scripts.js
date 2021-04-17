@@ -67,7 +67,7 @@ pantryButton.addEventListener('click', function() {
   domUpdates.displayPantry(user, pantry, globalIngredientsData);
 });
 
-searchInput.addEventListener('keydown', function() {
+searchInput.addEventListener('keyup', function() {
   domUpdates.searchBarSearch(recipeRepository, globalIngredientsData);
 });
 function onStartup() {
@@ -105,6 +105,9 @@ function displayDirections(event) {
     }
   })
   let recipeObject = new Recipe(newRecipeInfo, globalIngredientsData);
+  const ingrdientWithName = convertToName(recipeObject);
+  recipeObject.ingredients = ingrdientWithName;
+  console.log(recipeObject);
   let cost = recipeObject.calculateCost()
   let costInDollars = (cost / 100).toFixed(2)
   cardArea.classList.add('all');
@@ -156,9 +159,10 @@ function cookMeal(event) {
 }
 
 function convertToName(recipeToCook) {
+  console.log(recipeToCook);
   let ingredientInfo = recipeToCook.ingredients.map(ingredient => {
     const index = globalIngredientsData.findIndex(ingredientStat => ingredientStat.id === ingredient.id);
-    return {name: globalIngredientsData[index].name,id: ingredient.id , quantity:  {amount: ingredient.quantity.amount}};
+    return {name: globalIngredientsData[index].name,id: ingredient.id , quantity:  {amount: ingredient.quantity.amount, unit: ingredient.quantity.unit}};
   });
   return ingredientInfo;
 }

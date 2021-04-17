@@ -16,23 +16,30 @@ class RecipeRepository {
   retrieveListByNameOrIngredients(keyword, ingredientData) {
     //take results and make it all capital or lower case
     keyword = keyword.toLowerCase();
-    //console.log(this.recipeData)
     let results = this.recipeData.filter(recipe => {
+      let addToSearch = false;
       let lowerCaseName = recipe.name.toLowerCase();
-      let ingredients = recipe.ingredients.map(ingredient => {
-        const index = ingredientData.find(ingredientElement => ingredientElement.id === ingredient.id)
-        //console.log(ingredientData);
-        if (index > -1) {
-          return ingredientData[index].name
-
+      if(lowerCaseName.includes(keyword))
+        addToSearch = true;
+      let ingredients = this.convertToName(recipe, ingredientData);
+      ingredients.forEach(ingredient => {
+        if(ingredient.name.includes(keyword))
+        {
+          addToSearch = true;
         }
-      })
-      //console.log(lowerCaseName);
-      if (lowerCaseName.includes(keyword) || ingredients.includes(keyword))
-        return true
+      });
+      return addToSearch
+      }); 
+    return results;
+  };
 
+
+convertToName(recipe, ingredientData) {
+  let ingredientInfo = recipe.ingredients.map(ingredient => {
+    const index = ingredientData.findIndex(ingredientStat => ingredientStat.id === ingredient.id);
+    return {name: ingredientData[index].name};
   });
-  return results;
+  return ingredientInfo;
 }
 
 

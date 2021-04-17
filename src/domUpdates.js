@@ -173,7 +173,7 @@ let domUpdates = {
             recipes to cook'></button>
             <label for='favorite-button' class='hidden'>Click to favorite recipe
             </label>
-            <button id='${recipe.id}' aria-label='favorite-button' class='favorite favorite-active card-button'>
+            <button id='${recipe.id}' aria-label='favorite-button' class='favorite card-button'>
             </button></header>
             <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
             <img id='${recipe.id}' tabindex='0' class='card-picture'
