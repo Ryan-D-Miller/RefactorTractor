@@ -90,9 +90,11 @@ let domUpdates = {
     },
     displayPantry(user, pantry, ingredientData) {
         cardArea.classList.add('all');
+        let cantCookSpan = document.querySelector('.cant-cook');
         const ingredients = pantry.showInfo(ingredientData);
         cardArea.innerHTML = `<h3>${user.name} Pantry!</h3>
         <p class='all-recipe-info'>
+        <strong class='cant-cook-header'></strong><span class='cant-cook recipe-info all-cards'></span><br>
         <strong>Recipes To Cook</strong><span id='recipiesToCook' class='recipes recipe-info all-cards'></span><br>
         <strong>In Pantry </strong><span class='ingredients recipe-info'></span>
         </p>`
@@ -123,11 +125,26 @@ let domUpdates = {
                         <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
                         <img id='${recipe.id}' tabindex='0' class='card-picture'
                         src='${recipe.image}' alt='click to view recipe for ${recipe.name}'>
-                        <button id='cook-meal-button' class='cook-meal navButton'>Cook this Meal</button>
+                        <button id='${recipe.id}' class='cook-meal navButton'>Cook this Meal</button>
                 </div>`);
             });
             this.getFavorites(user);
         }
+    },
+    cantCookDisplay(missingIngredients) {
+        let cantCookSpan = document.querySelector('.cant-cook');
+        let cantCookHeaderSpan = document.querySelector('.cant-cook-header');
+        cantCookSpan.innerHTML = "";
+        cantCookHeaderSpan.innerHTML = "Not enough ingredients to Cook! You are missing -"
+        missingIngredients.forEach(ingredient => {
+            cantCookSpan.insertAdjacentHTML('afterbegin', `<ul><li>
+            ${ingredient.amount} of ${ingredient.name}
+            </li></ul>`)
+        });
+    },
+    cookMeal(recipe) {
+        let cantCookSpan = document.querySelector('.cant-cook');
+        cantCookSpan.innerHTML = `Cooked ${recipe.name}!`;
     }
 };
 

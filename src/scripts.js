@@ -81,7 +81,9 @@ function cardButtonConditionals(event) {
     domUpdates.populateCards(cookbook.recipes, user);
   } else if (event.target.classList.contains('add-button')) {
     user.addRecipe(addCookRecipe(event));
-  } 
+  } else if(event.target.classList.contains('cook-meal')) {
+    cookMeal(event);
+  }
 }
 
 function displayDirections(event) {
@@ -124,4 +126,27 @@ function addCookRecipe(event) {
       }
   });
   return specificRecipe;
+}
+
+function cookMeal(event) {
+  let recipeToCook = addCookRecipe(event);
+  let ingredientsName = convertToName(recipeToCook);
+  recipeToCook.ingredients = ingredientsName;
+  let canCook = pantry.checkMeal(recipeToCook);
+  if(canCook === true) {
+    pantry.cookMeal(recipeToCook);
+    user.removeRecipe(recipeToCook);
+    domUpdates.displayPantry(user, pantry, ingredientsData);
+    domUpdates.cookMeal(recipeToCook);
+  } else {
+    domUpdates.cantCookDisplay(canCook);
+  }
+}
+
+function convertToName(recipeToCook) {
+  let ingredientInfo = recipeToCook.ingredients.map(ingredient => {
+    const index = ingredientsData.findIndex(ingredientStat => ingredientStat.id === ingredient.id);
+    return {name: ingredientsData[index].name,id: ingredient.id , quantity:  {amount: ingredient.quantity.amount}};
+  });
+  return ingredientInfo;
 }
