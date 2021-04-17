@@ -1,10 +1,11 @@
-import './css/base.scss';
-import './css/styles.scss';
 import domUpdates from './domUpdates';
 import Pantry from './pantry';
 import Recipe from './recipe';
 import User from './user';
 import Cookbook from './cookbook';
+
+import './css/index.scss';
+
 
 let globalIngredientsData = {}
 
