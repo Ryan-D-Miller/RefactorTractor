@@ -5,6 +5,7 @@ import './css/styles.scss';
 let userData = {}
 let ingredientsData = {}
 let recipeData = {}
+let recipeRepository;
 
 function getData() {
   userData = fetch("http://localhost:3001/api/v1/users")
@@ -41,11 +42,14 @@ import Pantry from './pantry';
 import Recipe from './recipe';
 import User from './user';
 import Cookbook from './cookbook';
+import RecipeRepository from './recipeRepository'
 
 let favButton = document.querySelector('.view-favorites');
 let homeButton = document.querySelector('.home');
 let cardArea = document.querySelector('.all-cards');
 let user, pantry, cookbook;
+
+let searchInput = document.querySelector('#searchInput');
 
 window.onload = onStartup();
 
@@ -55,6 +59,9 @@ favButton.addEventListener('click', function() {
 });
 cardArea.addEventListener('click', cardButtonConditionals);
 
+searchInput.addEventListener('keydown', function() {
+  domUpdates.searchBarSearch(recipeRepository, ingredientsData);
+});
 function onStartup() {
   getData()
   .then(data => {
@@ -62,15 +69,20 @@ function onStartup() {
     let newUser = userData.find(user => {
       return user.id === Number(userId);
     });
- 
+
       cookbook = new Cookbook(recipeData);
   user = new User(userId, newUser.name, newUser.pantry)
   pantry = new Pantry(newUser.pantry)
+  recipeRepository = new RecipeRepository (recipeData);
   domUpdates.populateCards(cookbook.recipes, user);
   domUpdates.greetUser(user);
   });
 }
 
+// function searchBarSearch() {
+//   let search =
+
+// }
 
 function cardButtonConditionals(event) {
   if (event.target.classList.contains('favorite')) {
@@ -116,4 +128,3 @@ function displayDirections(event) {
     `)
   })
 }
-
