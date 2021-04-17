@@ -3,6 +3,7 @@ import Pantry from './pantry';
 import Recipe from './recipe';
 import User from './user';
 import Cookbook from './cookbook';
+import RecipeRepository from './recipeRepository'
 
 import './css/index.scss';
 
@@ -28,13 +29,6 @@ const getRecipeData = () => fetch("http://localhost:3001/api/v1/recipes")
   .catch(err => console.log(`Recipe API Error: ${err.message}`));
 
 
-import domUpdates from './domUpdates';
-import Pantry from './pantry';
-import Recipe from './recipe';
-import User from './user';
-import Cookbook from './cookbook';
-import RecipeRepository from './recipeRepository'
-
 const postIngredients = (userID, ingredientID, ingredientMod) => fetch("http://localhost:3001/api/v1/users", {
   method: 'POST',
   body: JSON.stringify({
@@ -59,7 +53,6 @@ let homeButton = document.querySelector('.home');
 let cardArea = document.querySelector('.all-cards');
 let pantryButton = document.querySelector('.view-pantry');
 let user, pantry, cookbook;
-let user, cookbook;
 let searchInput = document.querySelector('#searchInput');
 
 
@@ -71,11 +64,11 @@ favButton.addEventListener('click', function() {
 });
 cardArea.addEventListener('click', cardButtonConditionals);
 pantryButton.addEventListener('click', function() {
-  domUpdates.displayPantry(user, pantry, ingredientsData);
+  domUpdates.displayPantry(user, pantry, globalIngredientsData);
 });
 
 searchInput.addEventListener('keydown', function() {
-  domUpdates.searchBarSearch(recipeRepository, ingredientsData);
+  domUpdates.searchBarSearch(recipeRepository, globalIngredientsData);
 });
 function onStartup() {
   getData()
@@ -83,7 +76,7 @@ function onStartup() {
       user = new User(userData[(Math.floor(Math.random() * userData.length))]);
       globalIngredientsData = ingredientsData;
       cookbook = new Cookbook(recipeData);
-      let pantry = new Pantry(user.pantry);
+      pantry = new Pantry(user.pantry);
       recipeRepository = new RecipeRepository (recipeData);
       domUpdates.populateCards(cookbook.recipes, user);
       domUpdates.greetUser(user);
@@ -139,7 +132,7 @@ function displayDirections(event) {
 }
 
 function addCookRecipe(event) {
-  let specificRecipe = recipeData.find(recipe => {
+  let specificRecipe = recipeRepository.recipeData.find(recipe => {
       if (recipe.id  === Number(event.target.id)) {
           return recipe;
       }
@@ -155,7 +148,7 @@ function cookMeal(event) {
   if(canCook === true) {
     pantry.cookMeal(recipeToCook);
     user.removeRecipe(recipeToCook);
-    domUpdates.displayPantry(user, pantry, ingredientsData);
+    domUpdates.displayPantry(user, pantry, globalIngredientsData);
     domUpdates.cookMeal(recipeToCook);
   } else {
     domUpdates.cantCookDisplay(canCook);
@@ -164,8 +157,8 @@ function cookMeal(event) {
 
 function convertToName(recipeToCook) {
   let ingredientInfo = recipeToCook.ingredients.map(ingredient => {
-    const index = ingredientsData.findIndex(ingredientStat => ingredientStat.id === ingredient.id);
-    return {name: ingredientsData[index].name,id: ingredient.id , quantity:  {amount: ingredient.quantity.amount}};
+    const index = globalIngredientsData.findIndex(ingredientStat => ingredientStat.id === ingredient.id);
+    return {name: globalIngredientsData[index].name,id: ingredient.id , quantity:  {amount: ingredient.quantity.amount}};
   });
   return ingredientInfo;
 }
