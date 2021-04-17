@@ -80,7 +80,7 @@ function cardButtonConditionals(event) {
     favButton.innerHTML = 'View Favorites';
     domUpdates.populateCards(cookbook.recipes, user);
   } else if (event.target.classList.contains('add-button')) {
-    user.addRecipe()
+    user.addRecipe(addCookRecipe(event));
   } 
 }
 
@@ -115,4 +115,13 @@ function displayDirections(event) {
     ${instruction.instruction}</li>
     `)
   })
+}
+
+function addCookRecipe(event) {
+  let specificRecipe = recipeData.find(recipe => {
+      if (recipe.id  === Number(event.target.id)) {
+          return recipe;
+      }
+  });
+  return specificRecipe;
 }

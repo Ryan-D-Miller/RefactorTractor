@@ -70,25 +70,25 @@ let domUpdates = {
             <img id='${recipe.id}' tabindex='0' class='card-picture'
             src='${recipe.image}' alt='Food from recipe'>
             </div>`)
-          })
+        })
         }
-      },
-      favoriteCard(event, cookbook, user) {
+    },
+    favoriteCard(event, cookbook, user) {
         let specificRecipe = cookbook.recipes.find(recipe => {
-          if (recipe.id  === Number(event.target.id)) {
-            return recipe;
-          }
+            if (recipe.id  === Number(event.target.id)) {
+                return recipe;
+            }
         })
         if (!event.target.classList.contains('favorite-active')) {
-          event.target.classList.add('favorite-active');
-          favButton.innerHTML = 'View Favorites';
-          user.addToFavorites(specificRecipe);
+            event.target.classList.add('favorite-active');
+            favButton.innerHTML = 'View Favorites';
+            user.addToFavorites(specificRecipe);
         } else if (event.target.classList.contains('favorite-active')) {
-          event.target.classList.remove('favorite-active');
-          user.removeFromFavorites(specificRecipe)
+            event.target.classList.remove('favorite-active');
+            user.removeFromFavorites(specificRecipe)
         }
-      },
-      displayPantry(user, pantry, ingredientData) {
+    },
+    displayPantry(user, pantry, ingredientData) {
         cardArea.classList.add('all');
         const ingredients = pantry.showInfo(ingredientData);
         cardArea.innerHTML = `<h3>${user.name} Pantry!</h3>
