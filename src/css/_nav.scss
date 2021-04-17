@@ -47,24 +47,15 @@ h1 {
 }
 
 .search-button {
-  // background-color: #ffffff;
-  // border: 1px solid $black;
-  // display: flex;
-
   height: 100%;
   width: 15%;
   padding-left: .5rem;
   border: none;
   background: none;
-  // height: 100%;
-  // margin-top: 3px;
 }
 
 .search-input {
-  // border: 1px solid $black;
   font-size: .8rem;
-  // height: 100%;
-  // margin: 3px 7px 0px 0px;
   padding: 0;
   border: none;
   background: none;
@@ -75,24 +66,32 @@ h1 {
 }
 
 .card-button:hover,
-.navButton:hover,
+.nav-button:hover,
   {
   background-color: #cff2da;
 }
 
 .search-image:active,
 .card-button:active,
-.navButton:active,
+.nav-button:active,
 .search-button:active {
   background-color: #C3C2C6;
 }
 
 @media screen and (max-width: 550px) {
   .nav-button {
-
+    font-size: .5rem;
+    height: 2rem;
+    width: 5rem;
+    margin: .2rem;
   }
 
-  .user-info {
+  .search-bar {
+    width: 60%;
+    margin: .2rem;    
+  }
+
+  h1, .user-info, .search-button {
     display: none;
   }
 }
