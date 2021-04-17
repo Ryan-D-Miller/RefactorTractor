@@ -46,6 +46,7 @@ import Cookbook from './cookbook';
 let favButton = document.querySelector('.view-favorites');
 let homeButton = document.querySelector('.home');
 let cardArea = document.querySelector('.all-cards');
+let pantryButton = document.querySelector('.view-pantry');
 let user, pantry, cookbook;
 
 window.onload = onStartup();
@@ -55,6 +56,9 @@ favButton.addEventListener('click', function() {
   domUpdates.viewFavorites(user, cookbook);
 });
 cardArea.addEventListener('click', cardButtonConditionals);
+pantryButton.addEventListener('click', function() {
+  domUpdates.displayPantry(user, pantry, ingredientsData);
+});
 
 function onStartup() {
   getData()
@@ -77,7 +81,7 @@ function cardButtonConditionals(event) {
     domUpdates.populateCards(cookbook.recipes, user);
   } else if (event.target.classList.contains('add-button')) {
     user.addRecipe()
-  }
+  } 
 }
 
 function displayDirections(event) {

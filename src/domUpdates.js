@@ -87,6 +87,20 @@ let domUpdates = {
           event.target.classList.remove('favorite-active');
           user.removeFromFavorites(specificRecipe)
         }
+      },
+      displayPantry(user, pantry, ingredientData) {
+        cardArea.classList.add('all');
+        const ingredients = pantry.showInfo(ingredientData);
+        cardArea.innerHTML = `<h3>${user.name} Pantry!</h3>
+        <p class='all-recipe-info'>
+        <strong>In Pantry </strong><span class='ingredients recipe-info'></span>
+        </p>`
+        let ingredientsSpan = document.querySelector('.ingredients');
+        ingredients.forEach(ingredient => {
+            ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
+            ${ingredient.amount} ${ingredient.name}
+            </li></ul>`)
+        });
       }
 };
 
