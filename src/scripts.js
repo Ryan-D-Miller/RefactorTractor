@@ -57,9 +57,11 @@ function getData() {
 let favButton = document.querySelector('.view-favorites');
 let homeButton = document.querySelector('.home');
 let cardArea = document.querySelector('.all-cards');
+let pantryButton = document.querySelector('.view-pantry');
+let user, pantry, cookbook;
 let user, cookbook;
-
 let searchInput = document.querySelector('#searchInput');
+
 
 window.onload = onStartup();
 
@@ -68,6 +70,9 @@ favButton.addEventListener('click', function() {
   domUpdates.viewFavorites(user, cookbook);
 });
 cardArea.addEventListener('click', cardButtonConditionals);
+pantryButton.addEventListener('click', function() {
+  domUpdates.displayPantry(user, pantry, ingredientsData);
+});
 
 searchInput.addEventListener('keydown', function() {
   domUpdates.searchBarSearch(recipeRepository, ingredientsData);
@@ -94,7 +99,9 @@ function cardButtonConditionals(event) {
     favButton.innerHTML = 'View Favorites';
     domUpdates.populateCards(cookbook.recipes, user);
   } else if (event.target.classList.contains('add-button')) {
-    user.addRecipe()
+    user.addRecipe(addCookRecipe(event));
+  } else if(event.target.classList.contains('cook-meal')) {
+    cookMeal(event);
   }
 }
 
@@ -129,6 +136,37 @@ function displayDirections(event) {
     ${instruction.instruction}</li>
     `)
   })
+}
 
+function addCookRecipe(event) {
+  let specificRecipe = recipeData.find(recipe => {
+      if (recipe.id  === Number(event.target.id)) {
+          return recipe;
+      }
+  });
+  return specificRecipe;
+}
+
+function cookMeal(event) {
+  let recipeToCook = addCookRecipe(event);
+  let ingredientsName = convertToName(recipeToCook);
+  recipeToCook.ingredients = ingredientsName;
+  let canCook = pantry.checkMeal(recipeToCook);
+  if(canCook === true) {
+    pantry.cookMeal(recipeToCook);
+    user.removeRecipe(recipeToCook);
+    domUpdates.displayPantry(user, pantry, ingredientsData);
+    domUpdates.cookMeal(recipeToCook);
+  } else {
+    domUpdates.cantCookDisplay(canCook);
+  }
+}
+
+function convertToName(recipeToCook) {
+  let ingredientInfo = recipeToCook.ingredients.map(ingredient => {
+    const index = ingredientsData.findIndex(ingredientStat => ingredientStat.id === ingredient.id);
+    return {name: ingredientsData[index].name,id: ingredient.id , quantity:  {amount: ingredient.quantity.amount}};
+  });
+  return ingredientInfo;
 }
 

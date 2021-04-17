@@ -148,8 +148,12 @@ describe('Pantry', function() {
             'ingredient': 1009054,
             'amount': 2
           }]);
-          expect(pantry.cookMeal(recipeDontHave)).to.eql("Dont have ingredients to cook!")
+          expect(pantry.cookMeal(recipeDontHave)).to.eql("Don't have ingredients to cook!")
     });
+
+    // it('should return the names of all the ingredients in the pantry along with amount', function() {
+    //   expect(pantry.showNames(ingredientData)).to.eql()
+    // });
 
 });
 

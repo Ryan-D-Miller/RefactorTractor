@@ -3,6 +3,14 @@ class Pantry {
     this.contents = userIngredients;
   }
 
+  showInfo(ingredientData) {
+    let ingredientInfo = this.contents.map(ingredient => {
+      const index = ingredientData.findIndex(ingredientStat => ingredientStat.id === ingredient.ingredient);
+      return {name: ingredientData[index].name, amount: ingredient.amount};
+    });
+    return ingredientInfo;
+  }
+
   checkMeal(recipe) {
     let haveIngredient = true;
     let missingIngredients = [];
@@ -36,7 +44,6 @@ class Pantry {
     } else {
       return "Don't have ingredients to cook!";
     } 
-      
   }
 }
 
