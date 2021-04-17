@@ -105,8 +105,10 @@ h3 {
   background-repeat: no-repeat;
 }
 
-@media only screen and (max-width:550px) {
+@media screen and (max-width: 550px) {
   .all-cards {
-    grid-template-columns: 2fr;
+      display: grid;
+      grid-gap: .4rem;
+      grid-template-columns: repeat(2, 1fr);
   }
 }
