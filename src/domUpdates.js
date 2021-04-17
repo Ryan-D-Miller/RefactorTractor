@@ -93,15 +93,40 @@ let domUpdates = {
         const ingredients = pantry.showInfo(ingredientData);
         cardArea.innerHTML = `<h3>${user.name} Pantry!</h3>
         <p class='all-recipe-info'>
+        <strong>Recipes To Cook</strong><span id='recipiesToCook' class='recipes recipe-info all-cards'></span><br>
         <strong>In Pantry </strong><span class='ingredients recipe-info'></span>
         </p>`
         let ingredientsSpan = document.querySelector('.ingredients');
+        let recipiesSpan = document.getElementById('recipiesToCook');
         ingredients.forEach(ingredient => {
             ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
             ${ingredient.amount} ${ingredient.name}
             </li></ul>`)
         });
-      }
+        if(user.recipesToCook.length === 0) {
+            recipiesSpan.insertAdjacentHTML('afterbegin', `<p>No recipies to Cook!</p>`)
+        } else {
+            user.recipesToCook.forEach(recipe => {
+                recipiesSpan.insertAdjacentHTML('afterbegin', `<div id='${recipe.id}'
+                class='card'>
+                    <header id='${recipe.id}' class='card-header'>
+                        <label for='add-button' class='hidden'>Click to add recipe</label>
+                        <button id='${recipe.id}' aria-label='add-button' class='add-button card-button'>
+                        <img id='${recipe.id} favorite' class='add'
+                        src='https://image.flaticon.com/icons/svg/32/32339.svg' alt='Add to
+                        recipes to cook'>
+                        </button>
+                        <label for='favorite-button' class='hidden'>Click to favorite recipe
+                        </label>
+                        <button id='${recipe.id}' aria-label='favorite-button' class='favorite favorite${recipe.id} card-button'></button>
+                    </header>
+                        <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
+                        <img id='${recipe.id}' tabindex='0' class='card-picture'
+                        src='${recipe.image}' alt='click to view recipe for ${recipe.name}'>
+                </div>`)
+            });
+        }
+    }
 };
 
 export default domUpdates;
