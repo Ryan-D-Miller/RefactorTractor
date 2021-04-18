@@ -30,8 +30,9 @@ h1 {
   font-weight: bold;
   margin: .5rem;
   box-shadow: 5px 5px 5px #B0B8B2;
-  outline: none;
+  outline-color: #308EA1;
   cursor: pointer;
+
 }
 
 .search-bar {
@@ -52,6 +53,7 @@ h1 {
   padding: .5rem;
   border: none;
   background: none;
+  outline-color: #308EA1
 }
 
 .search-input {
@@ -61,7 +63,7 @@ h1 {
   background: none;
   height: 100%;
   width: 80%;
-  outline: none;
+  outline-color: #308EA1;
 }
 
 .card-button:hover,
@@ -86,7 +88,7 @@ h1 {
 
   .search-bar {
     width: 60%;
-    margin: .2rem;    
+    margin: .2rem;
   }
 
   h1, .user-info {
