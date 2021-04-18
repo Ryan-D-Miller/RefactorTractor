@@ -102,7 +102,8 @@ h3 {
   border-radius: .5rem;
   margin: 5%;
   width: 90%;
-  outline-color: #308EA1 10px;
+  outline-color: #308EA1;
+  outline-width: thick;   
 
   &:hover {
     opacity: 0.7;
