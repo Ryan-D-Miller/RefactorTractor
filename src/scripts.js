@@ -81,7 +81,7 @@ function cardButtonConditionals(event) {
   if (event.target.classList.contains('favorite')) {
     domUpdates.favoriteCard(event, cookbook, user);
   } else if (event.target.classList.contains('card-picture')) {
-    displayDirections(event);
+    domUpdates.displayDirections(event, cookbook, globalIngredientsData, convertToName);
   } else if (event.target.classList.contains('home')) {
     favButton.innerHTML = 'View Favorites';
     domUpdates.populateCards(cookbook.recipes, user);
@@ -92,45 +92,9 @@ function cardButtonConditionals(event) {
   }
 }
 
-function displayDirections(event) {
-  let newRecipeInfo = cookbook.recipes.find(recipe => {
-    if (recipe.id === Number(event.target.id)) {
-      return recipe;
-    }
-  })
-  let recipeObject = new Recipe(newRecipeInfo, globalIngredientsData);
-  const ingrdientWithName = convertToName(recipeObject);
-  recipeObject.ingredients = ingrdientWithName;
-  console.log(recipeObject);
-  let cost = recipeObject.calculateCost()
-  let costInDollars = (cost / 100).toFixed(2)
-  cardArea.classList.add('all');
-  cardArea.innerHTML = `<h3>${recipeObject.name}</h3>
-  <p class='all-recipe-info'>
-  <strong>It will cost: </strong><span class='cost recipe-info'>
-  $${costInDollars}</span><br><br>
-  <strong>You will need: </strong><span class='ingredients recipe-info'></span>
-  <strong>Instructions: </strong><ol><span class='instructions recipe-info'>
-  </span></ol>
-  </p>`;
-  let ingredientsSpan = document.querySelector('.ingredients');
-  let instructionsSpan = document.querySelector('.instructions');
-  recipeObject.ingredients.forEach(ingredient => {
-    ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
-    ${ingredient.quantity.amount.toFixed(2)} ${ingredient.quantity.unit}
-    ${ingredient.name}</li></ul>
-    `)
-  })
-  recipeObject.instructions.forEach(instruction => {
-    instructionsSpan.insertAdjacentHTML('beforebegin', `<li>
-    ${instruction.instruction}</li>
-    `)
-  })
-}
-
 function addCookRecipe(event) {
   let specificRecipe = recipeRepository.recipeData.find(recipe => {
-      if (recipe.id  === Number(event.target.id)) {
+      if (recipe.id  === Number(event.target.dataset.id)) {
           return recipe;
       }
   });
@@ -153,7 +117,6 @@ function cookMeal(event) {
 }
 
 function convertToName(recipeToCook) {
-  console.log(recipeToCook);
   let ingredientInfo = recipeToCook.ingredients.map(ingredient => {
     const index = globalIngredientsData.findIndex(ingredientStat => ingredientStat.id === ingredient.id);
     return {name: globalIngredientsData[index].name,id: ingredient.id , quantity:  {amount: ingredient.quantity.amount, unit: ingredient.quantity.unit}};
