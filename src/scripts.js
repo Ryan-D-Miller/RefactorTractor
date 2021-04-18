@@ -1,6 +1,4 @@
 import domUpdates from './domUpdates';
-import Pantry from './pantry';
-import Recipe from './recipe';
 import User from './user';
 import Cookbook from './cookbook';
 import RecipeRepository from './recipeRepository'
@@ -46,7 +44,7 @@ let favButton = document.querySelector('.view-favorites');
 let homeButton = document.querySelector('.home');
 let cardArea = document.querySelector('.all-cards');
 let pantryButton = document.querySelector('.view-pantry');
-let user, pantry, cookbook;
+let user, cookbook;
 let searchInput = document.querySelector('#searchInput');
 
 
@@ -58,7 +56,7 @@ favButton.addEventListener('click', function() {
 });
 cardArea.addEventListener('click', cardButtonConditionals);
 pantryButton.addEventListener('click', function() {
-  domUpdates.displayPantry(user, pantry, globalIngredientsData);
+  domUpdates.displayPantry(user, globalIngredientsData);
 });
 
 searchInput.addEventListener('keyup', function() {
@@ -68,9 +66,9 @@ function onStartup() {
   getData()
     .then(([userData, ingredientsData, recipeData]) => {
       user = new User(userData[(Math.floor(Math.random() * userData.length))]);
+      console.log(user.pantry);
       globalIngredientsData = ingredientsData;
       cookbook = new Cookbook(recipeData);
-      pantry = new Pantry(user.pantry);
       recipeRepository = new RecipeRepository (recipeData);
       domUpdates.populateCards(cookbook.recipes, user);
       domUpdates.greetUser(user);
@@ -85,7 +83,7 @@ function cardButtonConditionals(event) {
   } else if (event.target.classList.contains('home')) {
     favButton.innerHTML = 'View Favorites';
     domUpdates.populateCards(cookbook.recipes, user);
-  } else if (event.target.classList.contains('add-button')) {
+  } else if (event.target.classList.contains('add')) { 
     user.addRecipe(addCookRecipe(event));
   } else if(event.target.classList.contains('cook-meal')) {
     cookMeal(event);
@@ -105,11 +103,11 @@ function cookMeal(event) {
   let recipeToCook = addCookRecipe(event);
   let ingredientsName = convertToName(recipeToCook);
   recipeToCook.ingredients = ingredientsName;
-  let canCook = pantry.checkMeal(recipeToCook);
+  let canCook = user.pantry.checkMeal(recipeToCook);
   if(canCook === true) {
-    pantry.cookMeal(recipeToCook);
+    user.pantry.cookMeal(recipeToCook);
     user.removeRecipe(recipeToCook);
-    domUpdates.displayPantry(user, pantry, globalIngredientsData);
+    domUpdates.displayPantry(user, globalIngredientsData);
     domUpdates.cookMeal(recipeToCook);
   } else {
     domUpdates.cantCookDisplay(canCook);

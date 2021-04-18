@@ -76,12 +76,12 @@ let domUpdates = {
       user.removeFromFavorites(specificRecipe)
     }
   },
-  displayPantry(user, pantry, ingredientData) {
+  displayPantry(user, ingredientData) {
     cardArea.classList.add('all');
     let cantCookSpan = document.querySelector('.cant-cook');
-    const ingredients = pantry.showInfo(ingredientData);
+    const ingredients = user.pantry.showInfo(ingredientData);
     cardArea.innerHTML = `<h3>${user.name} Pantry!</h3>
-        <p class='all-recipe-info'>
+        <p class='all-recipe-info'> 
         <strong class='cant-cook-header'></strong><span class='cant-cook recipe-info all-cards'></span><br>
         <strong>Recipes To Cook</strong><span id='recipiesToCook' class='recipes recipe-info all-cards'></span><br>
         <strong>In Pantry </strong><span class='ingredients recipe-info'></span>
