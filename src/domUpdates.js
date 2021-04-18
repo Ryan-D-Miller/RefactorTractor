@@ -58,25 +58,7 @@ let domUpdates = {
     } else {
       favButton.innerHTML = 'Refresh Favorites'
       cardArea.innerHTML = '';
-      user.favoriteRecipes.forEach(recipe => {
-        cardArea.insertAdjacentHTML('afterbegin', `<div data-id='${recipe.id}'
-            class='card'>
-            <header data-id='${recipe.id}' class='card-header'>
-            <label for='add-button' class='hidden'>Click to add recipe</label>
-            <button data-id='${recipe.id}' aria-label='add-button' class='add-button card-button'>
-            <img data-id='${recipe.id}' class='add'
-            src='https://image.flaticon.com/icons/svg/32/32339.svg' alt='Add to
-            recipes to cook'></button>
-            <label for='favorite-button' class='hidden'>Click to favorite recipe
-            </label>
-            <button data-id='${recipe.id}' aria-label='favorite-button' class='favorite favorite-active card-button'>
-            </button></header>
-            <img data-id='${recipe.id}' tabindex='0' class='card-picture'
-            src='${recipe.image}' alt='Food from recipe'>
-            <span data-id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
-
-            </div>`)
-      })
+      this.populateCards(user.favoriteRecipes, user);
     }
   },
   favoriteCard(event, cookbook, user) {
@@ -114,7 +96,12 @@ let domUpdates = {
     if (user.recipesToCook.length === 0) {
       recipiesSpan.insertAdjacentHTML('afterbegin', `<p>No recipies to Cook!</p>`)
     } else {
-      user.recipesToCook.forEach(recipe => {
+        this.displayPantryRecipes(user, recipiesSpan);
+        this.getFavorites(user);
+    }
+  },
+  displayPantryRecipes(user, recipiesSpan) {
+    user.recipesToCook.forEach(recipe => {
         recipiesSpan.insertAdjacentHTML('afterbegin', `<div data-id='${recipe.id}'
                 class='card'>
                     <header data-id='${recipe.id}' class='card-header'>
@@ -134,8 +121,6 @@ let domUpdates = {
                         <button data-id='${recipe.id}' class='cook-meal navButton'>Cook this Meal</button>
                 </div>`);
       });
-      this.getFavorites(user);
-    }
   },
   cantCookDisplay(missingIngredients) {
     let cantCookSpan = document.querySelector('.cant-cook');
@@ -152,32 +137,14 @@ let domUpdates = {
     let cantCookSpan = document.querySelector('.cant-cook');
     cantCookSpan.innerHTML = `Cooked ${recipe.name}!`;
   },
-  searchBarSearch(recipeRepository, ingredientsData) {
+  searchBarSearch(recipeRepository, ingredientsData, user) {
     let userRequestSearch = searchInput.value;
     if (cardArea.classList.contains('all')) {
       cardArea.classList.remove('all')
     } else {
       cardArea.innerHTML = '';
-      const searchResults = recipeRepository.retrieveListByNameOrIngredients(userRequestSearch, ingredientsData)
-      searchResults.forEach(recipe => {
-
-        cardArea.insertAdjacentHTML('afterbegin', `<div data-id='${recipe.id}' 
-            class='card'>
-            <header data-id='${recipe.id}' class='card-header'>
-            <label for='add-button' class='hidden'>Click to add recipe</label>
-            <button data-id='${recipe.id}' aria-label='add-to-pantry-button' class='add-button card-button'>
-            <img data-id='${recipe.id}' class='add'
-            src='https://image.flaticon.com/icons/svg/32/32339.svg' alt='Add to
-            recipes to cook'></button>
-            <label for='favorite-button' class='hidden'>Click to favorite recipe
-            </label>
-            <button data-id='${recipe.id}' aria-label='favorite-button' class='favorite card-button'>
-            </button></header>
-            <img data-id='${recipe.id}' tabindex='0' class='card-picture'
-            src='${recipe.image}' alt='Food from recipe'>
-            <span data-id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
-            </div>`)
-      })
+      const searchResults = recipeRepository.retrieveListByNameOrIngredients(userRequestSearch, ingredientsData);
+      this.populateCards(searchResults, user);
     }
   },
   displayDirections(event, cookbook, globalIngredientsData, convertToName) {
