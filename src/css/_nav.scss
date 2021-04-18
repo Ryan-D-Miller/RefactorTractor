@@ -30,8 +30,9 @@ h1 {
   font-weight: bold;
   margin: .5rem;
   box-shadow: 5px 5px 5px #B0B8B2;
-  outline: none;
+  outline-color: $nav-color;
   cursor: pointer;
+
 }
 
 .search-bar {
@@ -86,7 +87,7 @@ h1 {
 
   .search-bar {
     width: 60%;
-    margin: .2rem;    
+    margin: .2rem;
   }
 
   h1, .user-info {
