@@ -18,7 +18,7 @@ let domUpdates = {
       cardArea.classList.remove('all')
     }
     recipes.forEach(recipe => {
-      cardArea.insertAdjacentHTML('afterbegin', 
+      cardArea.insertAdjacentHTML('afterbegin',
         `<div id='${recipe.id}' class='card'>
             <header id='${recipe.id}' class='card-header'>
                 <label for='add-button' class='hidden'>Click to add recipe</label>
@@ -173,9 +173,9 @@ let domUpdates = {
             </label>
             <button id='${recipe.id}' aria-label='favorite-button' class='favorite card-button'>
             </button></header>
-            <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
             <img id='${recipe.id}' tabindex='0' class='card-picture'
             src='${recipe.image}' alt='Food from recipe'>
+            <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
             </div>`)
       })
     }
