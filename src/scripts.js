@@ -7,13 +7,7 @@ import RecipeRepository from './recipeRepository'
 
 import './css/index.scss';
 
-
-let userData = {}
-let ingredientsData = {}
-let recipeData = {}
 let recipeRepository;
-
-
 let globalIngredientsData = {}
 
 const getUserData = () => fetch("http://localhost:3001/api/v1/users")
