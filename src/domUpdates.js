@@ -50,7 +50,7 @@ let domUpdates = {
       cardArea.classList.remove('all')
     }
     if (!user.favoriteRecipes.length) {
-      favButton.innerHTML = 'You have no favorites!';
+      favButton.innerHTML = 'No Favorites';
       this.populateCards(cookbook.recipes, user);
       return
     } else {
