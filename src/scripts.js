@@ -29,7 +29,7 @@ const postIngredients = (userID, ingredientID, ingredientMod) => fetch("http://l
     userID: userID,
     ingredientID: ingredientID,
     ingredientModification: ingredientMod,
-  }), 
+  }),
   headers: {
     'Content-Type': 'application/json'
   }
@@ -57,6 +57,7 @@ favButton.addEventListener('click', function() {
   domUpdates.viewFavorites(user, cookbook);
 });
 cardArea.addEventListener('click', cardButtonConditionals);
+cardArea.addEventListener('keypress', cardButtonConditionals);
 pantryButton.addEventListener('click', function() {
   domUpdates.displayPantry(user, pantry, globalIngredientsData);
 });
@@ -160,4 +161,3 @@ function convertToName(recipeToCook) {
   });
   return ingredientInfo;
 }
-
