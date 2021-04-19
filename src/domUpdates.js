@@ -16,8 +16,8 @@ let domUpdates = {
   },
   populateCards(recipes, user) {
     cardArea.innerHTML = '';
-    if (cardArea.classList.contains('all')) {
-      cardArea.classList.remove('all')
+    if (cardArea.classList.contains('recipe-view')) {
+      cardArea.classList.remove('recipe-view')
     }
     recipes.forEach(recipe => {
       cardArea.insertAdjacentHTML('afterbegin',
@@ -48,8 +48,8 @@ let domUpdates = {
     } else return
   },
   viewFavorites(user, cookbook) {
-    if (cardArea.classList.contains('all')) {
-      cardArea.classList.remove('all')
+    if (cardArea.classList.contains('recipe-view')) {
+      cardArea.classList.remove('recipe-view')
     }
     if (!user.favoriteRecipes.length) {
       favButton.innerHTML = 'No Favorites';
@@ -77,7 +77,7 @@ let domUpdates = {
     }
   },
   displayPantry(user, ingredientData) {
-    cardArea.classList.add('all');
+    cardArea.classList.add('recipe-view');
     let cantCookSpan = document.querySelector('.cant-cook');
     const ingredients = user.pantry.showInfo(ingredientData);
     cardArea.innerHTML = `
@@ -140,8 +140,8 @@ let domUpdates = {
   },
   searchBarSearch(recipeRepository, ingredientsData, user) {
     let userRequestSearch = searchInput.value;
-    if (cardArea.classList.contains('all')) {
-      cardArea.classList.remove('all')
+    if (cardArea.classList.contains('recipe-view')) {
+      cardArea.classList.remove('recipe-view')
     } else {
       cardArea.innerHTML = '';
       const searchResults = recipeRepository.retrieveListByNameOrIngredients(userRequestSearch, ingredientsData);
@@ -159,7 +159,7 @@ let domUpdates = {
     recipeObject.ingredients = ingrdientWithName;
     let cost = recipeObject.calculateCost()
     let costInDollars = (cost / 100).toFixed(2)
-    cardArea.classList.add('all');
+    cardArea.classList.add('recipe-view');
     cardArea.innerHTML = `
     <section class='all-recipe-info'>
     <h3>${recipeObject.name}</h3>

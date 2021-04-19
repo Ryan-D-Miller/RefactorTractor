@@ -12,7 +12,6 @@ img {
 
 .card {
   background-color: #D7F2FE;
-  // border: 3px solid $black;
   border-radius: 1rem;
   box-shadow: 0px 0px 8px $black;
   display: flex;
@@ -59,7 +58,7 @@ img {
   outline-color: #308EA1;
 }
 
-.all {
+.recipe-view {
   display: flex;
   flex-direction: column;
 }
@@ -75,23 +74,23 @@ img {
   align-items: center;
   color: $nav-color;
   
-  ol {
-    font-size: 14px;
-  }
-
   h3 {
     font-size: 20px;
   }
+
+  ol {
+    font-size: 14px;
+  }
 }
 
-.ingredients, .instructions {
+.ingredients {
   display: flex;
   flex-direction: column;
   align-content: center;
-  justify-content: center;
   flex-wrap: wrap;
-  height: 15rem;
-  width: 60%;
+  overflow: auto;
+  height: 18rem;
+  width: 100%;
 }
 
 
@@ -149,6 +148,11 @@ img {
     grid-template-columns: repeat(3, 1fr);
   }
 
+  .recipe-view {
+    display: flex;
+    flex-direction: column;
+  }
+
   .recipe-name {
     height: 2rem;
     font-size: 1rem;
@@ -160,6 +164,11 @@ img {
       display: grid;
       grid-gap: .4rem;
       grid-template-columns: repeat(2, 1fr);
+  }
+
+  .recipe-view {
+    display: flex;
+    flex-direction: column;
   }
 
   .recipe-name {
