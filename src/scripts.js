@@ -67,7 +67,6 @@ function onStartup() {
   getData()
     .then(([userData, ingredientsData, recipeData]) => {
       user = new User(userData[(Math.floor(Math.random() * userData.length))]);
-      console.log(user.pantry);
       globalIngredientsData = ingredientsData;
       cookbook = new Cookbook(recipeData);
       recipeRepository = new RecipeRepository (recipeData);

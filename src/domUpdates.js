@@ -38,11 +38,11 @@ let domUpdates = {
                 <span data-id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
         </div>`)
     })
-    this.getFavorites(user);
+    this.getFavorites(user.favoriteRecipes);
   },
-  getFavorites(user) {
-    if (user.favoriteRecipes.length) {
-      user.favoriteRecipes.forEach(recipe => {
+  getFavorites(favoriteRecipes) {
+    if (favoriteRecipes.length) {
+      favoriteRecipes.forEach(recipe => {
         document.querySelector(`.favorite${recipe.id}`).classList.add('favorite-active')
       })
     } else return
@@ -97,7 +97,7 @@ let domUpdates = {
       recipiesSpan.insertAdjacentHTML('afterbegin', `<p>No recipies to Cook!</p>`)
     } else {
         this.displayPantryRecipes(user, recipiesSpan);
-        this.getFavorites(user);
+        this.getFavorites(this.getPantryFavorites(user));
     }
   },
   displayPantryRecipes(user, recipiesSpan) {
@@ -121,6 +121,17 @@ let domUpdates = {
                         <button data-id='${recipe.id}' class='cook-meal navButton'>Cook this Meal</button>
                 </div>`);
       });
+  },
+  getPantryFavorites(user) {
+    const pantryRecipesId = user.recipesToCook.map(ingredient => {
+        return ingredient.id; 
+    });
+    const pantryFavorites = user.favoriteRecipes.filter(recipe => {
+        if(pantryRecipesId.includes(recipe.id)){
+            return recipe;
+        }
+    });
+    return pantryFavorites;
   },
   cantCookDisplay(missingIngredients) {
     let cantCookSpan = document.querySelector('.cant-cook');
