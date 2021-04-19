@@ -80,29 +80,30 @@ let domUpdates = {
     cardArea.classList.add('all');
     let cantCookSpan = document.querySelector('.cant-cook');
     const ingredients = user.pantry.showInfo(ingredientData);
-    cardArea.innerHTML = `<h3>${user.name} Pantry!</h3>
-        <p class='all-recipe-info'> 
-        <strong class='cant-cook-header'></strong><span class='cant-cook recipe-info all-cards'></span><br>
-        <strong>Recipes To Cook</strong><span id='recipiesToCook' class='recipes recipe-info all-cards'></span><br>
-        <strong>In Pantry </strong><span class='ingredients recipe-info'></span>
-        </p>`
+    cardArea.innerHTML = `
+        <section class='all-recipe-info'> 
+          <h3>${user.name}'s Pantry!</h3>
+          <strong class='cant-cook-header'></strong><span class='cant-cook recipe-info'></span><br>
+          <strong>Recipes To Cook</strong><span id='recipesToCook' class='recipes recipe-info all-cards'></span><br>
+          <strong>In Pantry </strong><span class='ingredients recipe-info'></span>
+        </section>`
     let ingredientsSpan = document.querySelector('.ingredients');
-    let recipiesSpan = document.getElementById('recipiesToCook');
+    let recipesSpan = document.getElementById('recipesToCook');
     ingredients.forEach(ingredient => {
       ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
             ${ingredient.amount} ${ingredient.name}
             </li></ul>`)
     });
     if (user.recipesToCook.length === 0) {
-      recipiesSpan.insertAdjacentHTML('afterbegin', `<p>No recipies to Cook!</p>`)
+      recipesSpan.insertAdjacentHTML('afterbegin', `<p>No recipes to Cook!</p>`)
     } else {
-        this.displayPantryRecipes(user, recipiesSpan);
-        this.getFavorites(user);
+      this.displayPantryRecipes(user, recipesSpan);
+      this.getFavorites(user);
     }
   },
-  displayPantryRecipes(user, recipiesSpan) {
+  displayPantryRecipes(user, recipesSpan) {
     user.recipesToCook.forEach(recipe => {
-        recipiesSpan.insertAdjacentHTML('afterbegin', `<div data-id='${recipe.id}'
+        recipesSpan.insertAdjacentHTML('afterbegin', `<div data-id='${recipe.id}'
                 class='card'>
                     <header data-id='${recipe.id}' class='card-header'>
                         <label for='add-button' class='hidden'>Click to add recipe</label>
@@ -159,14 +160,15 @@ let domUpdates = {
     let cost = recipeObject.calculateCost()
     let costInDollars = (cost / 100).toFixed(2)
     cardArea.classList.add('all');
-    cardArea.innerHTML = `<h3>${recipeObject.name}</h3>
-    <p class='all-recipe-info'>
+    cardArea.innerHTML = `
+    <section class='all-recipe-info'>
+    <h3>${recipeObject.name}</h3>
     <strong>It will cost: </strong><span class='cost recipe-info'>
     $${costInDollars}</span><br><br>
     <strong>You will need: </strong><span class='ingredients recipe-info'></span>
     <strong>Instructions: </strong><ol><span class='instructions recipe-info'>
     </span></ol>
-    </p>`;
+    </section>`;
     let ingredientsSpan = document.querySelector('.ingredients');
     let instructionsSpan = document.querySelector('.instructions');
     recipeObject.ingredients.forEach(ingredient => {

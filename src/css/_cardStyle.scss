@@ -68,17 +68,39 @@ img {
   background-color: $nav-color;
 }
 
-.all-recipe-info,
-ol {
+.all-recipe-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: $nav-color;
-  font-size: 14px;
+  
+  ol {
+    font-size: 14px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
 }
 
-h3 {
-  color: $nav-color;
-  font-size: 20px;
+.ingredients, .instructions {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 15rem;
+  width: 60%;
 }
 
+
+.recipes {
+//   display: flex;
+//   align-self: center;
+//   justify-self: center;
+}
+  
 .recipe-name {
   height: 2.5rem;
   display: flex;
