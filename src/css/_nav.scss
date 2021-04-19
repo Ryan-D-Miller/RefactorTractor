@@ -24,14 +24,15 @@ h1 {
 .nav-button {
   height: 2.5rem;
   width: 7rem;
-  background-color: #308EA1;
+  color: $white;
+  background-color: $button-color;
   border: 2px solid $black;
   border-radius: 1rem;
   font-size: .8rem;
   font-weight: bold;
   margin: .5rem;
-  box-shadow: 5px 5px 5px #B0B8B2;
-  outline-color: #308EA1;
+  box-shadow: $button-shadow;
+  outline-color: $button-color;
   cursor: pointer;
 
 }
@@ -44,8 +45,8 @@ h1 {
   width: 20rem;
   border: 1px solid $black;
   border-radius: 1rem;
-  background: #ffffff;
-  box-shadow: 5px 5px 5px #B0B8B2;
+  background: $white;
+  box-shadow: $button-shadow;
 }
 
 .search-button {
@@ -54,7 +55,7 @@ h1 {
   padding: .5rem;
   border: none;
   background: none;
-  outline-color: #308EA1
+  outline-color: $button-color;
 }
 
 .search-input {
@@ -64,7 +65,7 @@ h1 {
   background: none;
   height: 100%;
   width: 80%;
-  outline-color: #308EA1;
+  outline-color: $button-color;
 }
 
 .card-button:hover,
@@ -92,7 +93,8 @@ h1 {
     margin: .2rem;
   }
 
-  h1, .user-info {
+  h1,
+  .user-info {
     display: none;
   }
 }

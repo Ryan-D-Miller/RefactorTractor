@@ -38,8 +38,7 @@ img {
   background-color: $button-color;
   border-radius: 1rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center();
   outline-color: $button-color;
 }
 
@@ -66,10 +65,9 @@ img {
 
 .all-recipe-info {
   @include flex-column();
-  justify-content: center;
-  align-items: center;
+  @include flex-center();
   color: $nav-color;
-  
+
   h3 {
     font-size: 20px;
   }
@@ -85,19 +83,16 @@ img {
 
 .ingredients {
   @include flex-column();
-  align-content: flex-start;
-  justify-content: flex-start;
   margin: 1rem;
   flex-wrap: wrap;
 }
 
-  
+
 .recipe-name {
   color: $black;
   height: 2.5rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center();
   overflow-wrap: break-word;
   text-align: center;
   font-size: 1.2rem;
@@ -108,14 +103,12 @@ img {
 .no-recipes {
   display: flex;
   justify-self: center;
-  align-self: center;
-  text-align: center;
+  @include flex-center();
 }
 
 .picture-container {
   display: flex;
-  align-self: center;
-  justify-content: center;
+  @include flex-center();
 }
 
 .card-picture {
@@ -124,7 +117,7 @@ img {
   margin: 5%;
   width: 90%;
   outline-color: $button-color;
-  outline-width: thick;   
+  outline-width: thick;
 
   &:hover {
     opacity: 0.7;
@@ -139,7 +132,6 @@ img {
   background-image: url(https://image.flaticon.com/icons/svg/148/148841.svg);
   background-repeat: no-repeat;
 }
-
 
 @media screen and (max-width: 770px) {
   .all-cards {
@@ -158,24 +150,24 @@ img {
   }
 
   @media screen and (max-width: 550px) {
-  .all-cards {
+    .all-cards {
       display: grid;
       grid-gap: .4rem;
       grid-template-columns: repeat(2, 1fr);
-  }
+    }
 
-  .recipe-view {
-    display: flex;
-    flex-direction: column;
-  }
+    .recipe-view {
+      @include flex-column;
+    }
 
-  .recipe-name {
-    height: 1rem;
-    margin-top: .5rem;
-    font-size: .8rem;
+    .recipe-name {
+      height: 1rem;
+      margin-top: .5rem;
+      font-size: .8rem;
+    }
   }
 }
-}
+
 .hidden {
   display: none;
 }
