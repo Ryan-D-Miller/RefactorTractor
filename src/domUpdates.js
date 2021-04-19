@@ -90,12 +90,12 @@ let domUpdates = {
     let ingredientsSpan = document.querySelector('.ingredients');
     let recipesSpan = document.getElementById('recipesToCook');
     ingredients.forEach(ingredient => {
-      ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
+      ingredientsSpan.insertAdjacentHTML('afterbegin', `<li>
             ${ingredient.amount} ${ingredient.name}
-            </li></ul>`)
+            </li>`)
     });
     if (user.recipesToCook.length === 0) {
-      recipesSpan.insertAdjacentHTML('afterbegin', `<p>No recipes to Cook!</p>`)
+      recipesSpan.insertAdjacentHTML('afterbegin', `<p class="no-recipes">No recipes to Cook!</p>`)
     } else {
       this.displayPantryRecipes(user, recipesSpan);
       this.getFavorites(user);
@@ -129,9 +129,9 @@ let domUpdates = {
     cantCookSpan.innerHTML = "";
     cantCookHeaderSpan.innerHTML = "Not enough ingredients to Cook! You are missing -"
     missingIngredients.forEach(ingredient => {
-      cantCookSpan.insertAdjacentHTML('afterbegin', `<ul><li>
+      cantCookSpan.insertAdjacentHTML('afterbegin', `<li>
             ${ingredient.amount} of ${ingredient.name}
-            </li></ul>`)
+            </li>`)
     });
   },
   cookMeal(recipe) {
@@ -172,9 +172,9 @@ let domUpdates = {
     let ingredientsSpan = document.querySelector('.ingredients');
     let instructionsSpan = document.querySelector('.instructions');
     recipeObject.ingredients.forEach(ingredient => {
-      ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
+      ingredientsSpan.insertAdjacentHTML('afterbegin', `<li>
       ${ingredient.quantity.amount.toFixed(2)} ${ingredient.quantity.unit}
-      ${ingredient.name}</li></ul>
+      ${ingredient.name}</li>
       `)
     })
     recipeObject.instructions.forEach(instruction => {

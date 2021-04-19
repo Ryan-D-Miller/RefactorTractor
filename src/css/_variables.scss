@@ -1,3 +1,10 @@
 $background-color: #37515C;
 $nav-color: #EBF5EE;
 $black: #000;
+$card-background: #D7F2FE;
+$button-color: #308EA1;
+
+@mixin flex-column() {
+  display: flex;
+  flex-direction: column;
+}
