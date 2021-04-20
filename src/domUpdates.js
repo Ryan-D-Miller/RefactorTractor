@@ -16,8 +16,8 @@ let domUpdates = {
   },
   populateCards(recipes, user) {
     cardArea.innerHTML = '';
-    if (cardArea.classList.contains('all')) {
-      cardArea.classList.remove('all')
+    if (cardArea.classList.contains('recipe-view')) {
+      cardArea.classList.remove('recipe-view')
     }
     recipes.forEach(recipe => {
       cardArea.insertAdjacentHTML('afterbegin',
@@ -48,8 +48,8 @@ let domUpdates = {
     } else return
   },
   viewFavorites(user, cookbook) {
-    if (cardArea.classList.contains('all')) {
-      cardArea.classList.remove('all')
+    if (cardArea.classList.contains('recipe-view')) {
+      cardArea.classList.remove('recipe-view')
     }
     if (!user.favoriteRecipes.length) {
       favButton.innerHTML = 'No Favorites';
@@ -77,32 +77,33 @@ let domUpdates = {
     }
   },
   displayPantry(user, ingredientData) {
-    cardArea.classList.add('all');
+    cardArea.classList.add('recipe-view');
     let cantCookSpan = document.querySelector('.cant-cook');
     const ingredients = user.pantry.showInfo(ingredientData);
-    cardArea.innerHTML = `<h3>${user.name} Pantry!</h3>
-        <p class='all-recipe-info'> 
-        <strong class='cant-cook-header'></strong><span class='cant-cook recipe-info all-cards'></span><br>
-        <strong>Recipes To Cook</strong><span id='recipiesToCook' class='recipes recipe-info all-cards'></span><br>
-        <strong>In Pantry </strong><span class='ingredients recipe-info'></span>
-        </p>`
+    cardArea.innerHTML = `
+        <section class='all-recipe-info'> 
+          <h3>${user.name}'s Pantry!</h3>
+          <strong class='cant-cook-header'></strong><span class='cant-cook recipe-info'></span><br>
+          <strong>Recipes To Cook</strong><span id='recipesToCook' class='recipes recipe-info all-cards'></span><br>
+          <strong>In Pantry </strong><span class='ingredients recipe-info'></span>
+        </section>`
     let ingredientsSpan = document.querySelector('.ingredients');
-    let recipiesSpan = document.getElementById('recipiesToCook');
+    let recipesSpan = document.getElementById('recipesToCook');
     ingredients.forEach(ingredient => {
-      ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
+      ingredientsSpan.insertAdjacentHTML('afterbegin', `<li>
             ${ingredient.amount} ${ingredient.name}
-            </li></ul>`)
+            </li>`)
     });
     if (user.recipesToCook.length === 0) {
-      recipiesSpan.insertAdjacentHTML('afterbegin', `<p>No recipies to Cook!</p>`)
+      recipesSpan.insertAdjacentHTML('afterbegin', `<p class="no-recipes">No recipes to Cook!</p>`)
     } else {
         this.displayPantryRecipes(user, recipiesSpan);
         this.getFavorites(this.getPantryFavorites(user));
     }
   },
-  displayPantryRecipes(user, recipiesSpan) {
+  displayPantryRecipes(user, recipesSpan) {
     user.recipesToCook.forEach(recipe => {
-        recipiesSpan.insertAdjacentHTML('afterbegin', `<div data-id='${recipe.id}'
+        recipesSpan.insertAdjacentHTML('afterbegin', `<div data-id='${recipe.id}'
                 class='card'>
                     <header data-id='${recipe.id}' class='card-header'>
                         <label for='add-button' class='hidden'>Click to add recipe</label>
@@ -139,9 +140,9 @@ let domUpdates = {
     cantCookSpan.innerHTML = "";
     cantCookHeaderSpan.innerHTML = "Not enough ingredients to Cook! You are missing -"
     missingIngredients.forEach(ingredient => {
-      cantCookSpan.insertAdjacentHTML('afterbegin', `<ul><li>
+      cantCookSpan.insertAdjacentHTML('afterbegin', `<li>
             ${ingredient.amount} of ${ingredient.name}
-            </li></ul>`)
+            </li>`)
     });
   },
   cookMeal(recipe) {
@@ -150,8 +151,8 @@ let domUpdates = {
   },
   searchBarSearch(recipeRepository, ingredientsData, user) {
     let userRequestSearch = searchInput.value;
-    if (cardArea.classList.contains('all')) {
-      cardArea.classList.remove('all')
+    if (cardArea.classList.contains('recipe-view')) {
+      cardArea.classList.remove('recipe-view')
     } else {
       cardArea.innerHTML = '';
       const searchResults = recipeRepository.retrieveListByNameOrIngredients(userRequestSearch, ingredientsData);
@@ -169,21 +170,22 @@ let domUpdates = {
     recipeObject.ingredients = ingrdientWithName;
     let cost = recipeObject.calculateCost()
     let costInDollars = (cost / 100).toFixed(2)
-    cardArea.classList.add('all');
-    cardArea.innerHTML = `<h3>${recipeObject.name}</h3>
-    <p class='all-recipe-info'>
+    cardArea.classList.add('recipe-view');
+    cardArea.innerHTML = `
+    <section class='all-recipe-info'>
+    <h3>${recipeObject.name}</h3>
     <strong>It will cost: </strong><span class='cost recipe-info'>
     $${costInDollars}</span><br><br>
     <strong>You will need: </strong><span class='ingredients recipe-info'></span>
     <strong>Instructions: </strong><ol><span class='instructions recipe-info'>
     </span></ol>
-    </p>`;
+    </section>`;
     let ingredientsSpan = document.querySelector('.ingredients');
     let instructionsSpan = document.querySelector('.instructions');
     recipeObject.ingredients.forEach(ingredient => {
-      ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
+      ingredientsSpan.insertAdjacentHTML('afterbegin', `<li>
       ${ingredient.quantity.amount.toFixed(2)} ${ingredient.quantity.unit}
-      ${ingredient.name}</li></ul>
+      ${ingredient.name}</li>
       `)
     })
     recipeObject.instructions.forEach(instruction => {

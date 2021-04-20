@@ -1,3 +1,18 @@
+$black: #000000;
+$white: #FFFFFF;
+
 $background-color: #37515C;
+$button-color: #308EA1;
+$button-shadow: 5px 5px 5px #B0B8B2;
+$card-background: #D7F2FE;
 $nav-color: #EBF5EE;
-$black: #000;
+
+@mixin flex-column() {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-center() {
+  align-items: center;
+  justify-content: center;
+}

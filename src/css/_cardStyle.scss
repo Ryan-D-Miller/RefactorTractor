@@ -11,12 +11,10 @@ img {
 }
 
 .card {
-  background-color: #D7F2FE;
-  // border: 3px solid $black;
+  background-color: $card-background;
   border-radius: 1rem;
   box-shadow: 0px 0px 8px $black;
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
 }
 
 .card-header {
@@ -33,17 +31,15 @@ img {
   width: 2rem;
   margin: .4rem;
   cursor: pointer;
-  // outline: none;
 }
 
 .add-button {
   border: 2px solid $black;
-  background-color: #308EA1;
+  background-color: $button-color;
   border-radius: 1rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  outline-color: #308EA1;
+  @include flex-center();
+  outline-color: $button-color;
 }
 
 .add {
@@ -56,45 +52,63 @@ img {
   background-image: url(https://image.flaticon.com/icons/svg/149/149222.svg);
   background-repeat: no-repeat;
   background-position: center;
-  outline-color: #308EA1;
+  outline-color: $button-color;
 }
 
-.all {
-  display: flex;
-  flex-direction: column;
+.recipe-view {
+  @include flex-column();
 }
 
 .highlight {
   background-color: $nav-color;
 }
 
-.all-recipe-info,
-ol {
+.all-recipe-info {
+  @include flex-column();
+  @include flex-center();
   color: $nav-color;
-  font-size: 14px;
+
+  h3 {
+    font-size: 20px;
+  }
+
+  li {
+    margin: .3rem;
+  }
+
+  ol {
+    font-size: 14px;
+  }
 }
 
-h3 {
-  color: $nav-color;
-  font-size: 20px;
+.ingredients {
+  @include flex-column();
+  margin: 1rem;
+  flex-wrap: wrap;
 }
+
 
 .recipe-name {
+  color: $black;
   height: 2.5rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center();
   overflow-wrap: break-word;
   text-align: center;
   font-size: 1.2rem;
   padding-bottom: 1rem;
-  text-shadow: 2px 2px 5px #308EA1;
+  text-shadow: 2px 2px 5px $button-color;
+}
+
+.no-recipes {
+  display: flex;
+  justify-self: center;
+  @include flex-center();
 }
 
 .picture-container {
   display: flex;
-  align-self: center;
-  justify-content: center;
+  @include flex-center();
 }
 
 .card-picture {
@@ -102,8 +116,8 @@ h3 {
   border-radius: .5rem;
   margin: 5%;
   width: 90%;
-  outline-color: #308EA1;
-  outline-width: thick;   
+  outline-color: $button-color;
+  outline-width: thick;
 
   &:hover {
     opacity: 0.7;
@@ -119,7 +133,6 @@ h3 {
   background-repeat: no-repeat;
 }
 
-
 @media screen and (max-width: 770px) {
   .all-cards {
     display: grid;
@@ -127,23 +140,31 @@ h3 {
     grid-template-columns: repeat(3, 1fr);
   }
 
+  .recipe-view {
+    @include flex-column();
+  }
+
   .recipe-name {
     height: 2rem;
     font-size: 1rem;
   }
-}
 
   @media screen and (max-width: 550px) {
-  .all-cards {
+    .all-cards {
       display: grid;
       grid-gap: .4rem;
       grid-template-columns: repeat(2, 1fr);
-  }
+    }
 
-  .recipe-name {
-    height: 1rem;
-    margin-top: .5rem;
-    font-size: .8rem;
+    .recipe-view {
+      @include flex-column;
+    }
+
+    .recipe-name {
+      height: 1rem;
+      margin-top: .5rem;
+      font-size: .8rem;
+    }
   }
 }
 
