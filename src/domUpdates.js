@@ -25,7 +25,7 @@ let domUpdates = {
             <header data-id='${recipe.id}' class='card-header'>
                 <label for='add-button' class='hidden'>Click to add recipe</label>
                 <button data-id='${recipe.id}' aria-label='add-button' class='add-button card-button'>
-                <img data-id='${recipe.id}' favorite' class='add'
+                <img data-id='${recipe.id}' favorite' class='add' 
                 src='https://image.flaticon.com/icons/svg/32/32339.svg' alt='Add to
                 recipes to cook'>
                 </button>
@@ -80,10 +80,6 @@ let domUpdates = {
     cardArea.classList.add('recipe-view');
     let cantCookSpan = document.querySelector('.cant-cook');
     const ingredients = user.pantry.showInfo(ingredientData);
-    // let addIngredientButton = document.querySelector('.add-ingredient');
-    // let removeIngredientButton = document.querySelector('.remove-ingredient');
-    //
-    // addIngredientButton.addEventListener('click', )
     cardArea.innerHTML = `
         <section class='all-recipe-info'>
           <h3>${user.name}'s Pantry!</h3>
@@ -108,7 +104,7 @@ let domUpdates = {
     if (user.recipesToCook.length === 0) {
       recipesSpan.insertAdjacentHTML('afterbegin', `<p class="no-recipes">No recipes to Cook!</p>`)
     } else {
-        this.displayPantryRecipes(user, recipiesSpan);
+        this.displayPantryRecipes(user, recipesSpan);
         this.getFavorites(this.getPantryFavorites(user));
     }
   },
@@ -146,6 +142,8 @@ let domUpdates = {
     return pantryFavorites;
   },
   cantCookDisplay(missingIngredients) {
+    let cantCookSpan = document.querySelector('.cant-cook');
+    let cantCookHeaderSpan = document.querySelector('.cant-cook-header');
     cantCookSpan.innerHTML = "";
     cantCookHeaderSpan.innerHTML = "Not enough ingredients to Cook! You are missing -"
     missingIngredients.forEach(ingredient => {
@@ -208,8 +206,7 @@ let domUpdates = {
   updatePantryDom(ingredients) {
     let ingredientsSpan = document.querySelector('.ingredients');
     ingredients.forEach(ingredient => {
-      //console.log(ingredient.id)
-      ingredientsSpan.insertAdjacentHTML('afterbegin', `<li>
+      ingredientsSpan.insertAdjacentHTML('afterbegin', `<div><li>
             ${ingredient.amount} ${ingredient.name}
             </li>
             </li>
@@ -218,7 +215,7 @@ let domUpdates = {
             </button>
             <button data-id='${ingredient.id}' id='remove-ingredient' class='remove-ingredient nav-button'>
             -
-            </button>`)
+            </button></div>`)
     });
   }
 };

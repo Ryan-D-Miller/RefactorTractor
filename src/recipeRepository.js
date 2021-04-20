@@ -14,7 +14,6 @@ class RecipeRepository {
 
 
   retrieveListByNameOrIngredients(keyword, ingredientData) {
-    //take results and make it all capital or lower case
     keyword = keyword.toLowerCase();
     let results = this.recipeData.filter(recipe => {
       let addToSearch = false;
