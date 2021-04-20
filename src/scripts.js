@@ -23,6 +23,7 @@ const getRecipeData = () => fetch("http://localhost:3001/api/v1/recipes")
 function addOrRemoveIngredient(userID, ingredientID, ingredientMod) {
 //Input: user inputs an ingredient and an amount
 //Output: Amount is changed in the users pantry
+//console.log(ingredientID);
 return fetch("http://localhost:3001/api/v1/users", {
   method: 'POST',
   headers: {
@@ -37,10 +38,14 @@ return fetch("http://localhost:3001/api/v1/users", {
 })
   .then(response => response.json())
   .then(response => console.log(response))
+
+
     //console.log(response);
   //console.log(response) if successful should be getting this error back
   .catch(err => console.log(`POST Request Error: ${err.message}`))
 }
+
+
 
 
 
@@ -79,9 +84,10 @@ searchInput.addEventListener('keyup', function() {
 function onStartup() {
   getData()
     .then(([userData, ingredientsData, recipeData]) => {
-      // user = new User(userData[(Math.floor(Math.random() * userData.length))]);
-      user = new User(userData[1]);
-      console.log(userData[1]);
+      user = new User(userData[(Math.floor(Math.random() * userData.length))]);
+      //user = new User(userData[1]);
+      console.log(user.id);
+      //console.log(userData[1]);
       console.log(user.pantry);
       globalIngredientsData = ingredientsData;
       cookbook = new Cookbook(recipeData);
@@ -89,7 +95,7 @@ function onStartup() {
       domUpdates.populateCards(cookbook.recipes, user);
       domUpdates.greetUser(user);
     });
-    addOrRemoveIngredient(2, 20081, 1);
+    //addOrRemoveIngredient(2, 20081, 1);
 }
 
 function cardButtonConditionals(event) {
@@ -104,7 +110,19 @@ function cardButtonConditionals(event) {
     user.addRecipe(addCookRecipe(event));
   } else if(event.target.classList.contains('cook-meal')) {
     cookMeal(event);
+  } else if(event.target.classList.contains('add-ingredient')) {
+    addOrRemoveIngredient(user.id, event.target.dataset.id, 1);
+    updatePantry(user.id, ingredientID, 1)
+  } else if(event.target.classList.contains('remove-ingredient')) {
+    addOrRemoveIngredient(user.id, event.target.dataset.id, -1);
+    updatePantry(user.id, ingredientID, -1)
   }
+}
+
+function updatePantry(userID, ingredientID, ingredientMod){
+  //update user.pantry the local data model
+
+
 }
 
 function addCookRecipe(event) {

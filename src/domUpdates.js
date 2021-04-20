@@ -80,6 +80,12 @@ let domUpdates = {
     cardArea.classList.add('recipe-view');
     let cantCookSpan = document.querySelector('.cant-cook');
     const ingredients = user.pantry.showInfo(ingredientData);
+
+    // let addIngredientButton = document.querySelector('.add-ingredient');
+    // let removeIngredientButton = document.querySelector('.remove-ingredient');
+    //
+    // addIngredientButton.addEventListener('click', )
+
     cardArea.innerHTML = `
         <section class='all-recipe-info'>
           <h3>${user.name}'s Pantry!</h3>
@@ -102,9 +108,17 @@ let domUpdates = {
     let ingredientsSpan = document.querySelector('.ingredients');
     let recipesSpan = document.getElementById('recipesToCook');
     ingredients.forEach(ingredient => {
+      //console.log(ingredient.id)
       ingredientsSpan.insertAdjacentHTML('afterbegin', `<li>
             ${ingredient.amount} ${ingredient.name}
-            </li>`)
+            </li>
+            </li>
+            <button data-id='${ingredient.id}' id='add-ingredient' class='add-ingredient nav-button'>
+            +
+            </button>
+            <button data-id='${ingredient.id}' id='remove-ingredient' class='remove-ingredient nav-button'>
+            -
+            </button>`)
     });
     if (user.recipesToCook.length === 0) {
       recipesSpan.insertAdjacentHTML('afterbegin', `<p class="no-recipes">No recipes to Cook!</p>`)
@@ -136,10 +150,10 @@ let domUpdates = {
       });
   },
   cantCookDisplay(missingIngredients) {
-    let cantCookSpan = document.querySelector('.cant-cook');
-    let cantCookHeaderSpan = document.querySelector('.cant-cook-header');
-    let addIngredientButton = document.querySelector('.add-ingredient');
-    let removeIngredientButton = document.querySelector('.remove-ingredient');
+    // let cantCookSpan = document.querySelector('.cant-cook');
+    // let cantCookHeaderSpan = document.querySelector('.cant-cook-header');
+    // let addIngredientButton = document.querySelector('.add-ingredient');
+    // let removeIngredientButton = document.querySelector('.remove-ingredient');
     //addIngredientButton.addEventListener('click', addOrRemoveIngredient;
 
     cantCookSpan.innerHTML = "";
@@ -148,13 +162,7 @@ let domUpdates = {
       cantCookSpan.insertAdjacentHTML('afterbegin', `
             <li>
             ${ingredient.amount} of ${ingredient.name}
-            </li>
-            <button id='add-ingredient' class=''>
-            +
-            </button>
-            <button id='minus-ingredient class=''>
-            -
-            </button>`)
+          `)
     });
 
   },
