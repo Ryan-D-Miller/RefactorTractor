@@ -81,8 +81,20 @@ let domUpdates = {
     let cantCookSpan = document.querySelector('.cant-cook');
     const ingredients = user.pantry.showInfo(ingredientData);
     cardArea.innerHTML = `
-        <section class='all-recipe-info'> 
+        <section class='all-recipe-info'>
           <h3>${user.name}'s Pantry!</h3>
+          <strong>Add or Remove Ingredients to Your Pantry</strong><span class='recipes recipe-info all-cards'></span><br>
+
+          <!-- <form class='search-bar'>
+            <label for='search-button' class='hidden'>Click here to search here</label>
+            <button id='search-button' class='search-button'>
+              <img class='search-image' src='https://image.flaticon.com/icons/svg/660/660029.svg' alt='Search button'>
+            <label for='search-input' class='hidden' aria-label='search-recipes-here'>Type search query here</label>
+            <input id='searchInput' class='search-input' type='text' placeholder='Ingredient Name' value=''>
+            <label for='search-input' class='hidden' aria-label='search-recipes-here'>Type search query here</label>
+            <input id='searchInput' class='search-input' type='text' placeholder='Amount to Add/Remove (Negative amounts to remove)' value=''>
+          </form>
+           -->
           <strong class='cant-cook-header'></strong><span class='cant-cook recipe-info'></span><br>
           <strong>Recipes To Cook</strong><span id='recipesToCook' class='recipes recipe-info all-cards'></span><br>
           <strong>In Pantry </strong><span class='ingredients recipe-info'></span>
@@ -126,13 +138,25 @@ let domUpdates = {
   cantCookDisplay(missingIngredients) {
     let cantCookSpan = document.querySelector('.cant-cook');
     let cantCookHeaderSpan = document.querySelector('.cant-cook-header');
+    let addIngredientButton = document.querySelector('.add-ingredient');
+    let removeIngredientButton = document.querySelector('.remove-ingredient');
+    //addIngredientButton.addEventListener('click', addOrRemoveIngredient;
+
     cantCookSpan.innerHTML = "";
     cantCookHeaderSpan.innerHTML = "Not enough ingredients to Cook! You are missing -"
     missingIngredients.forEach(ingredient => {
-      cantCookSpan.insertAdjacentHTML('afterbegin', `<li>
+      cantCookSpan.insertAdjacentHTML('afterbegin', `
+            <li>
             ${ingredient.amount} of ${ingredient.name}
-            </li>`)
+            </li>
+            <button id='add-ingredient' class=''>
+            +
+            </button>
+            <button id='minus-ingredient class=''>
+            -
+            </button>`)
     });
+
   },
   cookMeal(recipe) {
     let cantCookSpan = document.querySelector('.cant-cook');
