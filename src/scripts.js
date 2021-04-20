@@ -9,21 +9,18 @@ let recipeRepository;
 let globalIngredientsData = {}
 
 const getUserData = () => fetch("http://localhost:3001/api/v1/users")
-  .then(response => response.json())
+  .then(response => checkForError(response))
   .catch(err => console.log(`User API Error: ${err.message}`));
 
 const getIngredientsData = () => fetch("http://localhost:3001/api/v1/ingredients")
-  .then(response => response.json())
+  .then(response => checkForError(response))
   .catch(err => console.log(`Ingredients API Error: ${err.message}`));
 
 const getRecipeData = () => fetch("http://localhost:3001/api/v1/recipes")
-  .then(response => response.json())
+  .then(response => checkForError(response))
   .catch(err => console.log(`Recipe API Error: ${err.message}`));
 
 function addOrRemoveIngredient(userID, ingredientID, ingredientMod) {
-//Input: user inputs an ingredient and an amount
-//Output: Amount is changed in the users pantry
-//console.log(ingredientID);
 return fetch("http://localhost:3001/api/v1/users", {
   method: 'POST',
   headers: {
@@ -36,23 +33,18 @@ return fetch("http://localhost:3001/api/v1/users", {
   }),
 
 })
-  .then(response => response.json())
-  .then(response => console.log(response))
+  .then(response => checkForError(response))
   .then(response => updatePantry(userID, ingredientID, ingredientMod))
-
-
-    //console.log(response);
-  //console.log(response) if successful should be getting this error back
   .catch(err => console.log(`POST Request Error: ${err.message}`))
 }
 
-
-
-
-
-// addOrRemoveIngredient(userID, 20081, 1);
-
-
+const checkForError = response => {
+  if (!response.ok) {
+    throw new Error('Something went wrong, please try again.');
+  } else {
+    return response.json();
+  }
+}
 
 function getData() {
   return Promise.all([getUserData(), getIngredientsData(), getRecipeData()])
@@ -93,7 +85,6 @@ function onStartup() {
       domUpdates.populateCards(cookbook.recipes, user);
       domUpdates.greetUser(user);
     });
-    //addOrRemoveIngredient(2, 20081, 1);
 }
 
 function cardButtonConditionals(event) {
@@ -116,15 +107,11 @@ function cardButtonConditionals(event) {
 }
 
 function updatePantry(userID, ingredientID, ingredientMod){
-  //update user.pantry the local data model
-
   let specificIngredient = user.pantry.contents.findIndex(ingredient => {
     if (Number(ingredient.ingredient) === Number(ingredientID)) {
       return true
     }
-
   });
-  //console.log(specificIngredient);
   user.pantry.contents[specificIngredient].amount += ingredientMod;
   domUpdates.displayPantry(user, globalIngredientsData);
 }

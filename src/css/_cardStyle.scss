@@ -82,9 +82,9 @@ img {
 }
 
 .ingredients {
-  @include flex-column();
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   margin: 1rem;
-  flex-wrap: wrap;
 }
 
 
@@ -164,6 +164,12 @@ img {
       height: 1rem;
       margin-top: .5rem;
       font-size: .8rem;
+    }
+
+    .ingredients {
+      @include flex-column();
+      margin: 1rem;
+      flex-wrap: wrap;
     }
   }
 }
