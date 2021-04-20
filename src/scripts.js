@@ -20,20 +20,33 @@ const getRecipeData = () => fetch("http://localhost:3001/api/v1/recipes")
   .then(response => response.json())
   .catch(err => console.log(`Recipe API Error: ${err.message}`));
 
-
-const postIngredients = (userID, ingredientID, ingredientMod) => fetch("http://localhost:3001/api/v1/users", {
+function addOrRemoveIngredient(userID, ingredientID, ingredientMod) {
+//Input: user inputs an ingredient and an amount
+//Output: Amount is changed in the users pantry
+return fetch("http://localhost:3001/api/v1/users", {
   method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
   body: JSON.stringify({
     userID: userID,
     ingredientID: ingredientID,
-    ingredientModification: ingredientMod,
+    ingredientModification: ingredientMod
   }),
-  headers: {
-    'Content-Type': 'application/json'
-  }
+
 })
   .then(response => response.json())
+  .then(response => console.log(response))
+    //console.log(response);
+  //console.log(response) if successful should be getting this error back
   .catch(err => console.log(`POST Request Error: ${err.message}`))
+}
+
+
+
+// addOrRemoveIngredient(userID, 20081, 1);
+
+
 
 function getData() {
   return Promise.all([getUserData(), getIngredientsData(), getRecipeData()])
@@ -66,7 +79,9 @@ searchInput.addEventListener('keyup', function() {
 function onStartup() {
   getData()
     .then(([userData, ingredientsData, recipeData]) => {
-      user = new User(userData[(Math.floor(Math.random() * userData.length))]);
+      // user = new User(userData[(Math.floor(Math.random() * userData.length))]);
+      user = new User(userData[1]);
+      console.log(userData[1]);
       console.log(user.pantry);
       globalIngredientsData = ingredientsData;
       cookbook = new Cookbook(recipeData);
@@ -74,6 +89,7 @@ function onStartup() {
       domUpdates.populateCards(cookbook.recipes, user);
       domUpdates.greetUser(user);
     });
+    addOrRemoveIngredient(2, 20081, 1);
 }
 
 function cardButtonConditionals(event) {
@@ -84,7 +100,7 @@ function cardButtonConditionals(event) {
   } else if (event.target.classList.contains('home')) {
     favButton.innerHTML = 'View Favorites';
     domUpdates.populateCards(cookbook.recipes, user);
-  } else if (event.target.classList.contains('add')) { 
+  } else if (event.target.classList.contains('add')) {
     user.addRecipe(addCookRecipe(event));
   } else if(event.target.classList.contains('cook-meal')) {
     cookMeal(event);
