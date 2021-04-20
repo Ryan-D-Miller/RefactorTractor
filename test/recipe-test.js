@@ -31,7 +31,7 @@ describe('Recipe', () => {
   it('Should be able to determine the name of ingredients needed', () => {
     //console.log(recipeData[47]);
     expect(recipe.retrieveIngredients()).to.eql(["cheese", "flatbread",
-    "fresh basil", "grape tomatoes", "olive oil", "zucchini"]);
+      "fresh basil", "grape tomatoes", "olive oil", "zucchini"]);
   });
 
   it('Should be able to return the directions and instructions' , () => {

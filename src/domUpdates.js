@@ -1,7 +1,6 @@
 import Recipe from './recipe';
 
 let favButton = document.querySelector('.view-favorites');
-let homeButton = document.querySelector('.home')
 let cardArea = document.querySelector('.all-cards');
 
 let searchInput = document.querySelector('#searchInput');
@@ -78,7 +77,6 @@ let domUpdates = {
   },
   displayPantry(user, ingredientData) {
     cardArea.classList.add('recipe-view');
-    let cantCookSpan = document.querySelector('.cant-cook');
     const ingredients = user.pantry.showInfo(ingredientData);
     cardArea.innerHTML = `
         <section class='all-recipe-info'>
@@ -104,13 +102,13 @@ let domUpdates = {
     if (user.recipesToCook.length === 0) {
       recipesSpan.insertAdjacentHTML('afterbegin', `<p class="no-recipes">No recipes to Cook!</p>`)
     } else {
-        this.displayPantryRecipes(user, recipesSpan);
-        this.getFavorites(this.getPantryFavorites(user));
+      this.displayPantryRecipes(user, recipesSpan);
+      this.getFavorites(this.getPantryFavorites(user));
     }
   },
   displayPantryRecipes(user, recipesSpan) {
     user.recipesToCook.forEach(recipe => {
-        recipesSpan.insertAdjacentHTML('afterbegin', `<div data-id='${recipe.id}'
+      recipesSpan.insertAdjacentHTML('afterbegin', `<div data-id='${recipe.id}'
                 class='card'>
                     <header data-id='${recipe.id}' class='card-header'>
                         <label for='add-button' class='hidden'>Click to add recipe</label>
@@ -128,16 +126,16 @@ let domUpdates = {
                         src='${recipe.image}' alt='click to view recipe for ${recipe.name}'>
                         <button data-id='${recipe.id}' class='cook-meal navButton'>Cook this Meal</button>
                 </div>`);
-      });
+    });
   },
   getPantryFavorites(user) {
     const pantryRecipesId = user.recipesToCook.map(ingredient => {
-        return ingredient.id; 
+      return ingredient.id;
     });
     const pantryFavorites = user.favoriteRecipes.filter(recipe => {
-        if(pantryRecipesId.includes(recipe.id)){
-            return recipe;
-        }
+      if (pantryRecipesId.includes(recipe.id)) {
+        return recipe;
+      }
     });
     return pantryFavorites;
   },

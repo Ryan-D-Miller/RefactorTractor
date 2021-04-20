@@ -6,7 +6,11 @@ class Pantry {
   showInfo(ingredientData) {
     let ingredientInfo = this.contents.map(ingredient => {
       const index = ingredientData.findIndex(ingredientStat => ingredientStat.id === ingredient.ingredient);
-      return {name: ingredientData[index].name, amount: ingredient.amount, id: ingredientData[index].id};
+      return {
+        name: ingredientData[index].name,
+        amount: ingredient.amount,
+        id: ingredientData[index].id
+      };
     });
 
     return ingredientInfo;
@@ -23,7 +27,10 @@ class Pantry {
         if (ingredientIndex !== -1) {
           amountDifference = ingredient.quantity.amount - this.contents[ingredientIndex].amount;
         }
-        missingIngredients.push({'name': ingredient.name, 'amount': amountDifference});
+        missingIngredients.push({
+          'name': ingredient.name,
+          'amount': amountDifference
+        });
       }
     });
     if (haveIngredient) {
@@ -33,10 +40,10 @@ class Pantry {
   }
 
   cookMeal(recipe) {
-    if(this.checkMeal(recipe) === true) {
+    if (this.checkMeal(recipe) === true) {
       recipe.ingredients.forEach(ingredient => {
         let ingredientIndex = this.contents.findIndex(element => element.ingredient === ingredient.id);
-        if(this.contents[ingredientIndex].amount <= ingredient.quantity.amount) {
+        if (this.contents[ingredientIndex].amount <= ingredient.quantity.amount) {
           this.contents.splice(ingredientIndex, 1);
         } else {
           this.contents[ingredientIndex].amount = this.contents[ingredientIndex].amount - ingredient.quantity.amount;

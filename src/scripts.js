@@ -21,21 +21,20 @@ const getRecipeData = () => fetch("http://localhost:3001/api/v1/recipes")
   .catch(err => console.log(`Recipe API Error: ${err.message}`));
 
 function addOrRemoveIngredient(userID, ingredientID, ingredientMod) {
-return fetch("http://localhost:3001/api/v1/users", {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    userID: userID,
-    ingredientID: ingredientID,
-    ingredientModification: ingredientMod
-  }),
-
-})
-  .then(response => checkForError(response))
-  .then(response => updatePantry(userID, ingredientID, ingredientMod))
-  .catch(err => console.log(`POST Request Error: ${err.message}`))
+  return fetch("http://localhost:3001/api/v1/users", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userID: userID,
+      ingredientID: ingredientID,
+      ingredientModification: ingredientMod
+    }),
+  })
+    .then(response => checkForError(response))
+    .then(response => updatePantry(userID, ingredientID, ingredientMod))
+    .catch(err => console.log(`POST Request Error: ${err.message}`))
 }
 
 const checkForError = response => {
@@ -62,18 +61,19 @@ let searchInput = document.querySelector('#searchInput');
 window.onload = onStartup();
 
 homeButton.addEventListener('click', cardButtonConditionals);
-favButton.addEventListener('click', function() {
+favButton.addEventListener('click', function () {
   domUpdates.viewFavorites(user, cookbook);
 });
 cardArea.addEventListener('click', cardButtonConditionals);
 cardArea.addEventListener('keypress', cardButtonConditionals);
-pantryButton.addEventListener('click', function() {
+pantryButton.addEventListener('click', function () {
   domUpdates.displayPantry(user, globalIngredientsData);
 });
 
-searchInput.addEventListener('keyup', function() {
+searchInput.addEventListener('keyup', function () {
   domUpdates.searchBarSearch(recipeRepository, globalIngredientsData, user);
 });
+
 function onStartup() {
   getData()
     .then(([userData, ingredientsData, recipeData]) => {
@@ -81,7 +81,7 @@ function onStartup() {
 
       globalIngredientsData = ingredientsData;
       cookbook = new Cookbook(recipeData);
-      recipeRepository = new RecipeRepository (recipeData);
+      recipeRepository = new RecipeRepository(recipeData);
       domUpdates.populateCards(cookbook.recipes, user);
       domUpdates.greetUser(user);
     });
@@ -97,16 +97,16 @@ function cardButtonConditionals(event) {
     domUpdates.populateCards(cookbook.recipes, user);
   } else if (event.target.classList.contains('add')) {
     user.addRecipe(addCookRecipe(event));
-  } else if(event.target.classList.contains('cook-meal')) {
+  } else if (event.target.classList.contains('cook-meal')) {
     cookMeal(event);
-  } else if(event.target.classList.contains('add-ingredient')) {
+  } else if (event.target.classList.contains('add-ingredient')) {
     addOrRemoveIngredient(user.id, event.target.dataset.id, 1);
-  } else if(event.target.classList.contains('remove-ingredient')) {
+  } else if (event.target.classList.contains('remove-ingredient')) {
     addOrRemoveIngredient(user.id, event.target.dataset.id, -1);
   }
 }
 
-function updatePantry(userID, ingredientID, ingredientMod){
+function updatePantry(userID, ingredientID, ingredientMod) {
   let specificIngredient = user.pantry.contents.findIndex(ingredient => {
     if (Number(ingredient.ingredient) === Number(ingredientID)) {
       return true
@@ -118,9 +118,9 @@ function updatePantry(userID, ingredientID, ingredientMod){
 
 function addCookRecipe(event) {
   let specificRecipe = recipeRepository.recipeData.find(recipe => {
-      if (recipe.id  === Number(event.target.dataset.id)) {
-          return recipe;
-      }
+    if (recipe.id === Number(event.target.dataset.id)) {
+      return recipe;
+    }
   });
   return specificRecipe;
 }
@@ -130,7 +130,7 @@ function cookMeal(event) {
   let ingredientsName = convertToName(recipeToCook);
   recipeToCook.ingredients = ingredientsName;
   let canCook = user.pantry.checkMeal(recipeToCook);
-  if(canCook === true) {
+  if (canCook === true) {
     user.pantry.cookMeal(recipeToCook);
     user.removeRecipe(recipeToCook);
     domUpdates.displayPantry(user, globalIngredientsData);
@@ -143,7 +143,14 @@ function cookMeal(event) {
 function convertToName(recipeToCook) {
   let ingredientInfo = recipeToCook.ingredients.map(ingredient => {
     const index = globalIngredientsData.findIndex(ingredientStat => ingredientStat.id === ingredient.id);
-    return {name: globalIngredientsData[index].name,id: ingredient.id , quantity:  {amount: ingredient.quantity.amount, unit: ingredient.quantity.unit}};
+    return {
+      name: globalIngredientsData[index].name,
+      id: ingredient.id,
+      quantity: {
+        amount: ingredient.quantity.amount,
+        unit: ingredient.quantity.unit
+      }
+    };
   });
   return ingredientInfo;
 }
