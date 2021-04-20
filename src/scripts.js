@@ -38,6 +38,7 @@ return fetch("http://localhost:3001/api/v1/users", {
 })
   .then(response => response.json())
   .then(response => console.log(response))
+  .then(response => updatePantry(userID, ingredientID, ingredientMod))
 
 
     //console.log(response);
@@ -112,17 +113,23 @@ function cardButtonConditionals(event) {
     cookMeal(event);
   } else if(event.target.classList.contains('add-ingredient')) {
     addOrRemoveIngredient(user.id, event.target.dataset.id, 1);
-    updatePantry(user.id, ingredientID, 1)
   } else if(event.target.classList.contains('remove-ingredient')) {
     addOrRemoveIngredient(user.id, event.target.dataset.id, -1);
-    updatePantry(user.id, ingredientID, -1)
   }
 }
 
 function updatePantry(userID, ingredientID, ingredientMod){
   //update user.pantry the local data model
 
+  let specificIngredient = user.pantry.contents.findIndex(ingredient => {
+    if (Number(ingredient.ingredient) === Number(ingredientID)) {
+      return true
+    }
 
+  });
+  //console.log(specificIngredient);
+  user.pantry.contents[specificIngredient].amount += ingredientMod;
+  domUpdates.displayPantry(user, globalIngredientsData);
 }
 
 function addCookRecipe(event) {

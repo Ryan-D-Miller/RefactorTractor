@@ -80,12 +80,10 @@ let domUpdates = {
     cardArea.classList.add('recipe-view');
     let cantCookSpan = document.querySelector('.cant-cook');
     const ingredients = user.pantry.showInfo(ingredientData);
-
     // let addIngredientButton = document.querySelector('.add-ingredient');
     // let removeIngredientButton = document.querySelector('.remove-ingredient');
     //
     // addIngredientButton.addEventListener('click', )
-
     cardArea.innerHTML = `
         <section class='all-recipe-info'>
           <h3>${user.name}'s Pantry!</h3>
@@ -105,21 +103,8 @@ let domUpdates = {
           <strong>Recipes To Cook</strong><span id='recipesToCook' class='recipes recipe-info all-cards'></span><br>
           <strong>In Pantry </strong><span class='ingredients recipe-info'></span>
         </section>`
-    let ingredientsSpan = document.querySelector('.ingredients');
     let recipesSpan = document.getElementById('recipesToCook');
-    ingredients.forEach(ingredient => {
-      //console.log(ingredient.id)
-      ingredientsSpan.insertAdjacentHTML('afterbegin', `<li>
-            ${ingredient.amount} ${ingredient.name}
-            </li>
-            </li>
-            <button data-id='${ingredient.id}' id='add-ingredient' class='add-ingredient nav-button'>
-            +
-            </button>
-            <button data-id='${ingredient.id}' id='remove-ingredient' class='remove-ingredient nav-button'>
-            -
-            </button>`)
-    });
+    this.updatePantryDom(ingredients);
     if (user.recipesToCook.length === 0) {
       recipesSpan.insertAdjacentHTML('afterbegin', `<p class="no-recipes">No recipes to Cook!</p>`)
     } else {
@@ -150,12 +135,6 @@ let domUpdates = {
       });
   },
   cantCookDisplay(missingIngredients) {
-    // let cantCookSpan = document.querySelector('.cant-cook');
-    // let cantCookHeaderSpan = document.querySelector('.cant-cook-header');
-    // let addIngredientButton = document.querySelector('.add-ingredient');
-    // let removeIngredientButton = document.querySelector('.remove-ingredient');
-    //addIngredientButton.addEventListener('click', addOrRemoveIngredient;
-
     cantCookSpan.innerHTML = "";
     cantCookHeaderSpan.innerHTML = "Not enough ingredients to Cook! You are missing -"
     missingIngredients.forEach(ingredient => {
@@ -214,6 +193,22 @@ let domUpdates = {
       ${instruction.instruction}</li>
       `)
     })
+  },
+  updatePantryDom(ingredients) {
+    let ingredientsSpan = document.querySelector('.ingredients');
+    ingredients.forEach(ingredient => {
+      //console.log(ingredient.id)
+      ingredientsSpan.insertAdjacentHTML('afterbegin', `<li>
+            ${ingredient.amount} ${ingredient.name}
+            </li>
+            </li>
+            <button data-id='${ingredient.id}' id='add-ingredient' class='add-ingredient nav-button'>
+            +
+            </button>
+            <button data-id='${ingredient.id}' id='remove-ingredient' class='remove-ingredient nav-button'>
+            -
+            </button>`)
+    });
   }
 };
 
